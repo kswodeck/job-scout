@@ -1,3 +1,7 @@
 # Local/CI run artifacts — regenerated each run, never committed.
 digest.md
 digest_title.txt
+
+# Materials builder: installed in CI via `npm ci --prefix materials`
+materials/node_modules/
+materials/out/

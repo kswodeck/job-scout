@@ -114,6 +114,7 @@ const argVal = f => { const i = args.indexOf(f); return i > -1 ? args[i + 1] : u
 
   const toScore = screened.slice(0, cfg.max_scores_per_run);
   const deferredIds = new Set(screened.slice(cfg.max_scores_per_run).map(j => j.id));
+  const textById = new Map(toScore.map(j => [j.id, j.text])); // posting text for the materials stage (not persisted)
   for (const batch of chunk(toScore, cfg.llm.score_batch)) {
     const cards = await scoreBatch(batch, cfg);
     batch.forEach((j, k) => {
@@ -154,5 +155,16 @@ const argVal = f => { const i = args.indexOf(f); return i > -1 ? args[i + 1] : u
     console.log("digest.md written.");
   } else {
     console.log("No matches \u2014 no digest issue today (set digest_when_empty to change).");
+  }
+
+  // ---- 9. Autonomous DRAFT application materials for strong matches ----
+  // Runs last and is fully non-fatal: a failure here never affects the digest or
+  // state. Uploads DRAFT-labeled DOCX to a Drive review folder; Kris reviews before
+  // sending. Needs cfg.materials.enabled + GOOGLE_SERVICE_ACCOUNT_JSON secret.
+  if (cfg.materials?.enabled) {
+    try {
+      const { runMaterials } = require("./materials");
+      await runMaterials(matches, textById, cfg);
+    } catch (e) { console.log(`Materials stage error (non-fatal): ${e.message}`); }
   }
 })().catch(e => { console.error("FATAL:", e); process.exit(1); });

@@ -24,5 +24,11 @@
   "max_llm_screens_per_run": 150,
   "max_scores_per_run": 40,
   "max_watchlist": 150,
-  "star_keywords": ["vue", "nuxt", "edtech", "christian", "faith-based", "ministry"]
+  "star_keywords": ["vue", "nuxt", "edtech", "christian", "faith-based", "ministry"],
+  "materials": {
+    "enabled": false,
+    "min_score": 60,
+    "max_per_run": 8,
+    "drive_folder_id": "1OgX1wT3GD90bqPFybrJ7w9djc8ji1-QX"
+  }
 }
