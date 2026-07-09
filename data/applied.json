@@ -1,0 +1,802 @@
+[
+ {
+  "company": "Arc",
+  "title": "Senior Software Engineer - Full Time"
+ },
+ {
+  "company": "McGraw Hill",
+  "title": "Software Engineer III"
+ },
+ {
+  "company": "Pariveda",
+  "title": "Software Engineer II"
+ },
+ {
+  "company": "Amazon",
+  "title": "Front-End Engineer, AWS Holmes"
+ },
+ {
+  "company": "Clever",
+  "title": "Software Engineer (Mid or Senior)"
+ },
+ {
+  "company": "CodeSignal",
+  "title": "Software Engineer, Learn"
+ },
+ {
+  "company": "FanDuel",
+  "title": "Senior Software Engineer – Front End"
+ },
+ {
+  "company": "jFrog",
+  "title": "Senior Web Developer"
+ },
+ {
+  "company": "Pearl",
+  "title": "Senior Frontend Engineer"
+ },
+ {
+  "company": "PrizePicks",
+  "title": "Senior Front End Engineer"
+ },
+ {
+  "company": "Render",
+  "title": "Software Engineer, Product"
+ },
+ {
+  "company": "Rocket",
+  "title": "Senior Software Engineer"
+ },
+ {
+  "company": "Step",
+  "title": "Senior Web Software Engineer"
+ },
+ {
+  "company": "1Password",
+  "title": "Senior Web Developer"
+ },
+ {
+  "company": "Goldman Sachs",
+  "title": "Front End Developer"
+ },
+ {
+  "company": "Maven",
+  "title": "Senior Software Engineer, Frontend Engineering"
+ },
+ {
+  "company": "Pennymac",
+  "title": "Frontend Engineer - AI Platform"
+ },
+ {
+  "company": "Reddit",
+  "title": "Senior Frontend Engineer, Community Builders"
+ },
+ {
+  "company": "Affirm",
+  "title": "Software Engineer II, Frontend (Purchasing Integrations)"
+ },
+ {
+  "company": "Amplify",
+  "title": "Software Engineer"
+ },
+ {
+  "company": "AxisCare",
+  "title": "Software Engineer (Mid-Level)"
+ },
+ {
+  "company": "Injective Labs",
+  "title": "Front-End Developer"
+ },
+ {
+  "company": "Kohls",
+  "title": "Software Engineer"
+ },
+ {
+  "company": "Thresh Consulting",
+  "title": "Senior Front-End Engineer"
+ },
+ {
+  "company": "Walker & Dunlop Careers",
+  "title": "Senior Frontend Software Engineer"
+ },
+ {
+  "company": "Affinitiv",
+  "title": "Senior Front End Software Engineer"
+ },
+ {
+  "company": "Copart",
+  "title": "Software Engineer"
+ },
+ {
+  "company": "Files.com",
+  "title": "Front End Engineer (Remote)"
+ },
+ {
+  "company": "Go Offer",
+  "title": "Frontend Engineer"
+ },
+ {
+  "company": "Invitation Homes",
+  "title": "Software Engineer IV"
+ },
+ {
+  "company": "Kin Insurance",
+  "title": "Software Engineer, Front-End Focus"
+ },
+ {
+  "company": "KPMG",
+  "title": "Front End Engineer - Senior Associate"
+ },
+ {
+  "company": "McKesson",
+  "title": "Web Developer"
+ },
+ {
+  "company": "Scale.jobs",
+  "title": "Frontend Engineer"
+ },
+ {
+  "company": "Stedi",
+  "title": "Frontend Engineer: US & Canada"
+ },
+ {
+  "company": "Tenna",
+  "title": "Senior Front-End Software Engineer"
+ },
+ {
+  "company": "Wagmo",
+  "title": "Senior Front End Engineer"
+ },
+ {
+  "company": "Acuity Insurance",
+  "title": "Senior Software Engineer/Web Developer"
+ },
+ {
+  "company": "Ad Hoc",
+  "title": "Software Engineer II - Front End"
+ },
+ {
+  "company": "Aditude",
+  "title": "Software Engineer (Frontend)"
+ },
+ {
+  "company": "Aleph",
+  "title": "Software Engineer"
+ },
+ {
+  "company": "Alkami Technology",
+  "title": "Sr Software Engineer - Front End"
+ },
+ {
+  "company": "Bestow",
+  "title": "Frontend Software Engineer II"
+ },
+ {
+  "company": "Canals",
+  "title": "Senior Frontend Engineer"
+ },
+ {
+  "company": "ClickUp",
+  "title": "Senior Frontend Engineer"
+ },
+ {
+  "company": "Close",
+  "title": "Senior Software Engineer - Frontend/React (USA Only - 100% Remote)"
+ },
+ {
+  "company": "CoreWeave",
+  "title": "Senior Front End Web Developer"
+ },
+ {
+  "company": "Corporate Tools LLC",
+  "title": "Software Engineer - Dallas, TX"
+ },
+ {
+  "company": "Corporate Tools LLC",
+  "title": "Senior Front-End Vue Developer"
+ },
+ {
+  "company": "DeepSense",
+  "title": "Frontend Systems Engineer (React/Next.js)"
+ },
+ {
+  "company": "Emvia CX",
+  "title": "UI Developer"
+ },
+ {
+  "company": "ExpertVoice",
+  "title": "Frontend / AI Engineer"
+ },
+ {
+  "company": "Fortive (Intelex)",
+  "title": "Software Developer"
+ },
+ {
+  "company": "Fox Corporation",
+  "title": "Software Developer"
+ },
+ {
+  "company": "Givzey",
+  "title": "Front End Engineer"
+ },
+ {
+  "company": "Grid (gridverify.com)",
+  "title": "Senior Frontend Engineer"
+ },
+ {
+  "company": "HOKA",
+  "title": "Sr. UI Developer, eCommerce, HOKA NA"
+ },
+ {
+  "company": "HumanSignal",
+  "title": "Senior Frontend Engineer"
+ },
+ {
+  "company": "Keeper Security",
+  "title": "Senior Frontend Software Engineer, Admin Console (React)"
+ },
+ {
+  "company": "LeafLink",
+  "title": "Senior Frontend Engineer"
+ },
+ {
+  "company": "MARICI Solutions",
+  "title": "Software Developer (React/Vue)"
+ },
+ {
+  "company": "Metabase",
+  "title": "Software Engineer (Frontend)"
+ },
+ {
+  "company": "Mozilla",
+  "title": "Senior Frontend Engineer"
+ },
+ {
+  "company": "Nebius",
+  "title": "Frontend Engineer - User Interface"
+ },
+ {
+  "company": "NetNow",
+  "title": "Front-end Engineer"
+ },
+ {
+  "company": "Omni",
+  "title": "Software Engineer - TypeScript/JavaScript"
+ },
+ {
+  "company": "Optimal Dynamics",
+  "title": "Senior Software Engineer, Frontend"
+ },
+ {
+  "company": "Pantheon Platform",
+  "title": "Software Engineer II - Collaborative Web Platform"
+ },
+ {
+  "company": "Phantom",
+  "title": "Frontend Engineer, Growth & Engagement Team"
+ },
+ {
+  "company": "Ramp",
+  "title": "Software Engineer, Frontend"
+ },
+ {
+  "company": "Re:Build Manufacturing",
+  "title": "Senior Frontend Engineer - AI Product"
+ },
+ {
+  "company": "Remesh",
+  "title": "Software Engineer"
+ },
+ {
+  "company": "Rise8",
+  "title": "Software Engineer III"
+ },
+ {
+  "company": "Scribd",
+  "title": "Software Engineer II (Frontend)"
+ },
+ {
+  "company": "Shuttle Labs (TradeGenius)",
+  "title": "Front-end Engineer"
+ },
+ {
+  "company": "Tech Holding",
+  "title": "Frontend Engineer (Contract) - Remote"
+ },
+ {
+  "company": "Terzo",
+  "title": "Senior Frontend Software Engineer"
+ },
+ {
+  "company": "TransPerfect Connect",
+  "title": "Senior UI/UX Engineer"
+ },
+ {
+  "company": "Trumid",
+  "title": "Senior UI Developer"
+ },
+ {
+  "company": "Uniswap Labs",
+  "title": "Senior Frontend Engineer"
+ },
+ {
+  "company": "Urban SDK",
+  "title": "Senior Front End Engineer"
+ },
+ {
+  "company": "Vanta",
+  "title": "Senior Web Developer"
+ },
+ {
+  "company": "VC Lab",
+  "title": "Front End Engineer (Remote)"
+ },
+ {
+  "company": "Vultr",
+  "title": "Frontend Engineer"
+ },
+ {
+  "company": "WEX",
+  "title": "Senior Web Engineer"
+ },
+ {
+  "company": "Workbench",
+  "title": "Software Engineer"
+ },
+ {
+  "company": "WorkOS",
+  "title": "Frontend Software Engineer"
+ },
+ {
+  "company": "Wow Remote Teams",
+  "title": "Senior Frontend Web Developer"
+ },
+ {
+  "company": "Air",
+  "title": "Senior / Staff Frontend Engineer"
+ },
+ {
+  "company": "Candid",
+  "title": "Software Engineer (Pathfinders)"
+ },
+ {
+  "company": "CentralReach",
+  "title": "Software Engineer, Applications"
+ },
+ {
+  "company": "Concentrix",
+  "title": "Senior Frontend Developer"
+ },
+ {
+  "company": "EY",
+  "title": "Front End Developer, Senior (Service Delivery Center)"
+ },
+ {
+  "company": "Filevine",
+  "title": "Senior Software Development Engineer (Front-end)"
+ },
+ {
+  "company": "Motion Recruitment (client)",
+  "title": "Senior Front-End Engineer (React & AI)"
+ },
+ {
+  "company": "MRIoA",
+  "title": "Web Developer (Remote)"
+ },
+ {
+  "company": "TradeStation",
+  "title": "Front-End Web Production Engineer"
+ },
+ {
+  "company": "UPchieve",
+  "title": "Software Engineer"
+ },
+ {
+  "company": "Avive Solutions Inc.",
+  "title": "Senior Frontend Engineer"
+ },
+ {
+  "company": "Clarity Ventures",
+  "title": "Front End Web Developer"
+ },
+ {
+  "company": "Maximus",
+  "title": "Front End Developer – Mid-level"
+ },
+ {
+  "company": "TradeStation",
+  "title": "Front End Web Production Engineer"
+ },
+ {
+  "company": "UST",
+  "title": "Frontend Engineer"
+ },
+ {
+  "company": "Verint",
+  "title": "Engineer, Software (QM/PM, Full-Stack)"
+ },
+ {
+  "company": "Elicit",
+  "title": "Frontend Engineer"
+ },
+ {
+  "company": "Abacus.AI",
+  "title": "Senior Frontend Engineer"
+ },
+ {
+  "company": "Fieldguide",
+  "title": "Software Engineer (All Levels)"
+ },
+ {
+  "company": "Pax8",
+  "title": "Software Engineer, Labs (Sr. Full-Stack/Frontend)"
+ },
+ {
+  "company": "Revvity",
+  "title": "Senior Front End Software Developer (AI, React, JavaScript)"
+ },
+ {
+  "company": "Allocate",
+  "title": "Sr. Software Engineer - Frontend"
+ },
+ {
+  "company": "Tekmetric",
+  "title": "Senior Software Engineer (Frontend)"
+ },
+ {
+  "company": "TensorWave",
+  "title": "Software Engineer - Front-End"
+ },
+ {
+  "company": "BRG (Second Sight Solutions)",
+  "title": "Software Engineer"
+ },
+ {
+  "company": "Jonas Software (PrestoSports)",
+  "title": "Software Engineer (Frontend)"
+ },
+ {
+  "company": "Cheil USA",
+  "title": "Software Engineer, Creative Technology"
+ },
+ {
+  "company": "Topstep",
+  "title": "Software Engineer III (Frontend/Full-Stack)"
+ },
+ {
+  "company": "Mindbody (Playlist)",
+  "title": "Software Engineer III - SmartDesk"
+ },
+ {
+  "company": "Fidelity",
+  "title": "Front End Developer (Angular, Node.JS, Automation)"
+ },
+ {
+  "company": "DoorDash",
+  "title": "Front End Web Developer, B2B, Marketing Technology"
+ },
+ {
+  "company": "The Health Management Academy (Provelle)",
+  "title": "Product Engineer"
+ },
+ {
+  "company": "Ookla",
+  "title": "Software Engineer III - Frontend"
+ },
+ {
+  "company": "Trek Bicycle",
+  "title": "User Interface Engineer"
+ },
+ {
+  "company": "ComfyUI",
+  "title": "Software Engineer, Frontend"
+ },
+ {
+  "company": "Solace",
+  "title": "Senior Software Engineer"
+ },
+ {
+  "company": "Clover Health",
+  "title": "UX Engineer"
+ },
+ {
+  "company": "One North",
+  "title": "Senior Front-End Developer"
+ },
+ {
+  "company": "Afresh",
+  "title": "Senior Software Engineer, Frontend (Ordering)"
+ },
+ {
+  "company": "Pearl Health",
+  "title": "Senior Frontend Engineer"
+ },
+ {
+  "company": "Kopius",
+  "title": "Sr Front End Engineer"
+ },
+ {
+  "company": "Tailscale",
+  "title": "Frontend Engineer"
+ },
+ {
+  "company": "Flex",
+  "title": "Frontend Engineer"
+ },
+ {
+  "company": "Mercury",
+  "title": "Senior Frontend Engineer - Design Systems"
+ },
+ {
+  "company": "OnePay",
+  "title": "Frontend Engineer, Servicing"
+ },
+ {
+  "company": "Census",
+  "title": "Frontend Developer"
+ },
+ {
+  "company": "ATPCO",
+  "title": "Senior UX Engineer"
+ },
+ {
+  "company": "Oneleet",
+  "title": "Frontend Engineer"
+ },
+ {
+  "company": "KoBold Metals",
+  "title": "Frontend Software Engineer"
+ },
+ {
+  "company": "GlossGenius",
+  "title": "Senior Software Engineer, Frontend"
+ },
+ {
+  "company": "Assembled",
+  "title": "Software Engineer, Product (Frontend-leaning)"
+ },
+ {
+  "company": "Third and Grove",
+  "title": "Frontend Developer"
+ },
+ {
+  "company": "CVS Health",
+  "title": "Senior Web Developer"
+ },
+ {
+  "company": "Outmarket AI",
+  "title": "Front End AI Engineer"
+ },
+ {
+  "company": "Team One",
+  "title": "Senior Experience Engineer"
+ },
+ {
+  "company": "HavocAI",
+  "title": "Senior Frontend Engineer"
+ },
+ {
+  "company": "Toast",
+  "title": "Senior Frontend Software Engineer"
+ },
+ {
+  "company": "Voyatek",
+  "title": "Front-End Developer (UI/UX Focused)"
+ },
+ {
+  "company": "Designbase",
+  "title": "Senior Frontend Developer"
+ },
+ {
+  "company": "Trafilea",
+  "title": "Sr Software Engineer Frontend"
+ },
+ {
+  "company": "Gray Swan",
+  "title": "Software Engineer"
+ },
+ {
+  "company": "Uniform Advantage (UA Brands)",
+  "title": "Senior Front-End Developer"
+ },
+ {
+  "company": "Deed",
+  "title": "Senior Web Engineer"
+ },
+ {
+  "company": "Veeva Systems",
+  "title": "Senior Technical Consultant - Front-end Development"
+ },
+ {
+  "company": "Unison",
+  "title": "Senior Front-End Engineer (React/TypeScript)"
+ },
+ {
+  "company": "OPENLANE",
+  "title": "Software Engineer"
+ },
+ {
+  "company": "PENN Interactive",
+  "title": "Web Developer, Casino"
+ },
+ {
+  "company": "Think Company",
+  "title": "Senior Front-End Engineer"
+ },
+ {
+  "company": "Zillow",
+  "title": "Software Development Engineer"
+ },
+ {
+  "company": "Rune Technologies",
+  "title": "Front End Engineer"
+ },
+ {
+  "company": "Aconomy",
+  "title": "Senior Front-End Developer"
+ },
+ {
+  "company": "Shutterfly",
+  "title": "Senior Software Engineer II (Frontend)"
+ },
+ {
+  "company": "Left Field Labs",
+  "title": "Senior Frontend Software Engineer"
+ },
+ {
+  "company": "Swooped",
+  "title": "Front-End Web Developer, B2B, Marketing Technology"
+ },
+ {
+  "company": "Careerminds",
+  "title": "Product Engineer"
+ },
+ {
+  "company": "Just Appraised",
+  "title": "Product Engineer"
+ },
+ {
+  "company": "Helios & Partners (Forge)",
+  "title": "Front End Developer"
+ },
+ {
+  "company": "MINDBODY (Playlist)",
+  "title": "Senior Software Engineer - Hosted Web"
+ },
+ {
+  "company": "Paper",
+  "title": "Software Engineer"
+ },
+ {
+  "company": "Cengage",
+  "title": "Software Engineer"
+ },
+ {
+  "company": "Stateside Brands",
+  "title": "Frontend Engineer"
+ },
+ {
+  "company": "HDR",
+  "title": "Software Engineer"
+ },
+ {
+  "company": "Siemens",
+  "title": "Software Developer"
+ },
+ {
+  "company": "Grid Dynamics",
+  "title": "Senior UI Engineer"
+ },
+ {
+  "company": "NuAxis Innovations",
+  "title": "Front-End Developer"
+ },
+ {
+  "company": "Compa",
+  "title": "Software Engineer, All Teams"
+ },
+ {
+  "company": "Scrunch",
+  "title": "Product Engineer"
+ },
+ {
+  "company": "GovCIO",
+  "title": "Mid-Sr React/Redux FrontEnd Developer"
+ },
+ {
+  "company": "Mobomo",
+  "title": "UX/UI Developer"
+ },
+ {
+  "company": "At Home Group Inc.",
+  "title": "Sr. Ecommerce Front-End Engineer"
+ },
+ {
+  "company": "Natera",
+  "title": "Software Engineer, Patient Experience"
+ },
+ {
+  "company": "Higharc",
+  "title": "Software Engineer, Showroom"
+ },
+ {
+  "company": "Revenium",
+  "title": "UI/UX Engineer"
+ },
+ {
+  "company": "Fueled",
+  "title": "Contract Senior Front End Engineer"
+ },
+ {
+  "company": "Vector Synergy",
+  "title": "Senior Front-End Developer"
+ },
+ {
+  "company": "Tempo Software",
+  "title": "Software Developer"
+ },
+ {
+  "company": "Praxis Precision Medicines",
+  "title": "Software Engineer"
+ },
+ {
+  "company": "Rabot",
+  "title": "Software Engineer"
+ },
+ {
+  "company": "Applied Research Solutions",
+  "title": "UI Developer"
+ },
+ {
+  "company": "insightsoftware",
+  "title": "Senior UI Engineer"
+ },
+ {
+  "company": "Prelim",
+  "title": "Software Engineer, Product"
+ },
+ {
+  "company": "FordDirect",
+  "title": "Frontend Software Engineer"
+ },
+ {
+  "company": "Verily Health",
+  "title": "Software Engineer III"
+ },
+ {
+  "company": "Uscreen",
+  "title": "Product Engineer"
+ },
+ {
+  "company": "Apex Systems",
+  "title": "UX/UI Developer"
+ },
+ {
+  "company": "Randstad",
+  "title": "Web Designer/Front End Developer"
+ },
+ {
+  "company": "EmpiRx Health",
+  "title": "Software Engineer II"
+ },
+ {
+  "company": "Amazon",
+  "title": "Software Dev Engineer, Benefits Experience & Technology (BXT)"
+ },
+ {
+  "company": "Provn (Cerbo / OptiMantra)",
+  "title": "Software Engineer"
+ },
+ {
+  "company": "ServiceCentral Technologies",
+  "title": "Modern Software Developer"
+ },
+ {
+  "company": "Chromatic",
+  "title": "Developer Experience Engineer"
+ },
+ {
+  "company": "HealthStream",
+  "title": "UX/Web Developer"
+ }
+]
