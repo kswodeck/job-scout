@@ -1,0 +1,11 @@
+{
+  "name": "job-scout",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Nightly broad-discovery job scout: fetch, prefilter, LLM-score against my rubric, digest as GitHub issue",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "scout": "node src/scout.js",
+    "preview": "node src/scout.js --no-llm"
+  }
+}

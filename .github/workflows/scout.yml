@@ -1,0 +1,55 @@
+name: Job Scout
+
+on:
+  schedule:
+    - cron: "30 11 * * *" # ~6:30am Central during CDT (5:30am during CST)
+  workflow_dispatch:
+    inputs:
+      lookback_days:
+        description: "Days of postings to scan (blank = config default)"
+        required: false
+
+concurrency:
+  group: job-scout
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  scout:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Claude Code CLI
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Run scout
+        env:
+          # Subscription mode (default): set CLAUDE_CODE_OAUTH_TOKEN (from `claude setup-token`).
+          # API mode (config llm.transport="api"): set ANTHROPIC_API_KEY instead.
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          LOOKBACK_DAYS: ${{ inputs.lookback_days }}
+        run: node src/scout.js
+
+      - name: Commit state
+        run: |
+          git config user.name "job-scout"
+          git config user.email "job-scout@users.noreply.github.com"
+          git add data
+          git diff --cached --quiet || git commit -m "scout state: $(date -u +%F)"
+          git push
+
+      - name: Open digest issue
+        if: ${{ hashFiles('digest.md') != '' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh issue create --title "$(cat digest_title.txt)" --body-file digest.md
