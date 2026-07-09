@@ -35,6 +35,7 @@ function buildDigest({ date, matches, skippedScored, stats, cost, preview }) {
     md += `> **Preview run (no LLM).** These are prefilter survivors only \u2014 not scored, not deduped against future state. Run with \`ANTHROPIC_API_KEY\` set for real scoring.\n\n`;
   }
   md += `**Pipeline:** ${stats.fetched} fetched \u2192 ${stats.fresh} new \u2192 ${stats.prefiltered} passed prefilter`;
+  if (stats.appliedSuppressed) md += ` (\u2212${stats.appliedSuppressed} already-applied)`;
   if (!preview) md += ` \u2192 ${stats.screened} passed screen \u2192 ${stats.scored} scored \u2192 **${matches.length} matches**`;
   md += `.`;
   if (cost && cost.subscription) md += ` LLM usage: ${cost.detail}.`;

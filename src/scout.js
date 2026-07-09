@@ -10,6 +10,7 @@ const { screenBatch, scoreBatch, chunk, costSummary } = require("./llm");
 const { buildDigest, writeDigest, writeMatchesMd } = require("./digest");
 const state = require("./state");
 const { todayISO, normFamily } = require("./util");
+const { loadAppliedSet, isAlreadyApplied } = require("./applied");
 
 const args = process.argv.slice(2);
 const flag = f => args.includes(f);
@@ -71,26 +72,35 @@ const argVal = f => { const i = args.indexOf(f); return i > -1 ? args[i + 1] : u
   }
   console.log(`Prefilter: ${candidates.length}/${fresh} passed. Drops: ${JSON.stringify(dropReasons)}`);
 
-  // ---- 4. Duplicate suppression (same company + role family, 30-day window) ----
+  // ---- 4. Duplicate suppression ----
+  //   (a) already-applied: same company + same CORE role as a tracker row
+  //       (data/applied.json). No time window — a role stays blocked while it's
+  //       in the tracker. See src/applied.js.
+  //   (b) recent scout matches: same company + de-seniorized title family, 30 days.
+  const appliedSet = loadAppliedSet();
   const recentFamilies = new Set(
     st.matches.filter(m => Date.now() - Date.parse(m.scoutedAt) < 30 * 86400000).map(m => m.family)
   );
   const thisRun = new Set();
   const deduped = [];
+  let appliedSuppressed = 0;
   for (const j of candidates) {
     j.family = normFamily(j.company, j.title);
+    if (isAlreadyApplied(j, appliedSet)) { appliedSuppressed++; continue; }
     if (recentFamilies.has(j.family) || thisRun.has(j.family)) continue;
     thisRun.add(j.family);
     deduped.push(j);
   }
-  if (deduped.length < candidates.length) console.log(`Duplicates suppressed: ${candidates.length - deduped.length}`);
+  if (appliedSuppressed) console.log(`Already-applied suppressed: ${appliedSuppressed} (tracker has ${appliedSet ? appliedSet.size : 0} roles)`);
+  const dupSuppressed = candidates.length - appliedSuppressed - deduped.length;
+  if (dupSuppressed > 0) console.log(`Duplicates suppressed: ${dupSuppressed}`);
 
   // ---- 5. Grow the ATS watchlist from ALL fresh postings' text/urls ----
   const newCompanies = state.addCompanies(st.companies, scanForATSTokens(jobs), "auto-discovered", cfg.max_watchlist);
   if (newCompanies) console.log(`Watchlist: +${newCompanies} companies (now ${st.companies.length})`);
 
   // ---- 6. LLM stages ----
-  const stats = { fetched, fresh, prefiltered: candidates.length, screened: 0, scored: 0, newCompanies };
+  const stats = { fetched, fresh, prefiltered: candidates.length, appliedSuppressed, screened: 0, scored: 0, newCompanies };
   let matches = [], skippedScored = [];
 
   if (noLLM) {
