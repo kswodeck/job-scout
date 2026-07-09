@@ -6,10 +6,10 @@ const { truncate } = require("./util");
 const SCREEN_SYSTEM = `You screen job postings for Kris, a front-end/JavaScript software engineer (7+ years; JavaScript, TypeScript, Vue/Nuxt.js, Node.js professionally; React/Next.js via real personal projects; automated-testing background; US citizen in Dallas-Fort Worth, TX).
 
 For EACH numbered posting, PASS only if ALL are plausible:
-1. Individual-contributor software role a front-end/JS engineer could credibly fill: front-end, web, JavaScript/TypeScript, full-stack (JS-leaning), or general software engineer. FAIL roles whose core identity is: QA/SDET, backend-only, .NET/C#, Go, Java, PHP, Ruby, Python-only, mobile-native, data/ML/AI-research, DevOps/SRE/infra, security, embedded, or management.
-2. Location: remote from the US, or on-site/hybrid within Dallas-Fort Worth. FAIL if remote is scoped to a non-US region only, or on-site outside DFW.
+1. Individual-contributor, FRONT-END-leaning role: front-end, web, UI, or JavaScript/TypeScript engineer. FAIL roles whose core identity is: full-stack, back-end, "Forward Deployed", Principal/Staff/Founding-level, QA/SDET, .NET/C#, Go, Java, PHP, Ruby, Python-only, mobile-native, data/ML/AI-research, DevOps/SRE/infra, security, embedded, or management.
+2. Location: remote from the US, OR on-site/hybrid within ~45 miles of Arlington, TX (the DFW metroplex). Hybrid counts as in-office — FAIL any hybrid or on-site role tied to a location outside DFW (e.g. NYC/SF, or "remote" that is really hybrid-elsewhere), and FAIL remote scoped to a non-US region.
 3. If a salary is listed and the base ceiling is clearly below $80,000/year, FAIL. Unlisted salary is fine.
-4. It is a real, current job posting (not a course, gig platform ad, or staffing spam).
+4. A real, current posting with a genuine way to apply (link/email/ATS). FAIL courses, gig-platform ads, staffing spam, and informal posts with no application method.
 When genuinely unsure about a posting, PASS it (a stricter scorer runs next).
 
 Respond ONLY with a JSON array covering every posting, no markdown fences, no commentary:
@@ -26,13 +26,13 @@ MY PROFILE
 - TARGET ROLES: Front-End Developer/Engineer, JavaScript Developer, Web Application Developer, Software Engineer/Developer. Mid-to-senior; open to senior IC.
 - AVOID: roles whose primary identity is QA/SDET; roles where deep expertise in a gap-stack (.NET, Go, Angular-only) is the core requirement.
 - COMPENSATION FLOOR: $80,000 base minimum. Unlisted salary is acceptable and never counts against a job.
-- LOCATION: Remote (US) preferred, or hybrid in Dallas-Fort Worth. Fully on-site outside DFW is a dealbreaker.
+- LOCATION: Remote (US), or on-site/hybrid within ~45 miles of Arlington, TX (the DFW metroplex). Hybrid counts as in-office: any hybrid or on-site role tied to a location outside DFW is a dealbreaker.
 - BONUSES: EdTech domain, TypeScript-heavy codebases, modern JavaScript shops, strong testing culture, teams curious about AI/LLM tooling.
 
 RUBRIC
 Weights (100 total): stack & skills match 35 - role fit & positioning 25 - compensation vs. floor 10 - location/remote fit 10 - domain & company appeal 10 - seniority alignment 10.
 Stack scoring nuance: score stack match on overall front-end and JavaScript/TypeScript fit, not on Vue specifically. General JS/TS breadth carries the most weight; a strong JavaScript, TypeScript, React, Angular, or broad modern-JS role should score on par with a comparable Vue/Nuxt role. Vue/Nuxt is his deepest strength and a Vue match is a legitimate plus — just a plus, not the only path to a top stack score.
-Hard caps: fully on-site outside DFW (over 50 miles from Mansfield, TX), or salary clearly below $80,000 -> cap score at 35, verdict Skip. QA/SDET-primary role, or gap-stack as the core requirement -> cap at 54 (always Skip).
+Hard caps: hybrid or on-site outside ~45 miles of Arlington, TX (hybrid = in-office), or salary clearly below $80,000 -> cap score at 35, verdict Skip. QA/SDET-primary, full-stack/back-end-primary, "Forward Deployed", or gap-stack as the core requirement -> cap at 54 (always Skip).
 Salary not listed: never assume a number. Report "Not listed", give full compensation credit, never treat as a negative. Only a LISTED salary below the floor counts against a job.
 Verdict bands (firm): 70-100 Strong match - 55-69 Worth applying - below 55 Skip.
 Requirement matching: a skill missing from his resume does NOT mean he lacks it — his resume is a tailored subset. Count a requirement MATCHED if he can honestly claim it OR has directly transferable/adjacent experience making it a ramp-up rather than a true gap (Nuxt SSR maps to Next.js SSR; REST maps to ramping on GraphQL). Count NOT MATCHED only for genuine gaps with no real transferable path (see GENUINE GAPS). React and Angular are score-neutral: never count a React or Angular requirement as not-matched (even production-scale) and never award bonus points for them. (Separate from AVOID: an Angular-only-identity role is still capped.)

@@ -23,6 +23,9 @@ const APPLIED = path.join(__dirname, "..", "data", "applied.json");
 function normCompany(c) {
   return String(c || "")
     .toLowerCase()
+    .replace(/^company:\s*/, "")               // HN posts sometimes prefix "Company:"
+    .replace(/\([^)]*\)/g, " ")                // drop parentheticals e.g. "(S14)", "(www.x.co)"
+    .replace(/https?:\/\/\S+|www\.\S+/g, " ")  // drop stray URLs from HN company fields
     .replace(/&/g, " and ")
     .replace(/\b(inc|llc|l\.l\.c|ltd|co|corp|corporation|careers)\b/g, " ")
     .replace(/[^a-z0-9 ]+/g, " ")
