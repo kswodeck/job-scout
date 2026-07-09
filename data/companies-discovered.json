@@ -1,4 +1,266 @@
 [
- {"ats": "greenhouse", "token": "gitlab", "via": "seed (Vue/Nuxt shop, remote-first)", "first_seen": "2026-07-08"},
- {"ats": "ashby", "token": "linear", "via": "seed (verified during build)", "first_seen": "2026-07-08"}
+ {
+  "ats": "greenhouse",
+  "token": "gitlab",
+  "via": "seed (Vue/Nuxt shop, remote-first)",
+  "first_seen": "2026-07-08"
+ },
+ {
+  "ats": "ashby",
+  "token": "linear",
+  "via": "seed (verified during build)",
+  "first_seen": "2026-07-08"
+ },
+ {
+  "ats": "greenhouse",
+  "token": "weave",
+  "via": "auto-discovered",
+  "first_seen": "2026-07-09"
+ },
+ {
+  "ats": "greenhouse",
+  "token": "beautifulai",
+  "via": "auto-discovered",
+  "first_seen": "2026-07-09"
+ },
+ {
+  "ats": "greenhouse",
+  "token": "oklo",
+  "via": "auto-discovered",
+  "first_seen": "2026-07-09"
+ },
+ {
+  "ats": "greenhouse",
+  "token": "obsidiansecurity",
+  "via": "auto-discovered",
+  "first_seen": "2026-07-09"
+ },
+ {
+  "ats": "greenhouse",
+  "token": "grafanalabs",
+  "via": "auto-discovered",
+  "first_seen": "2026-07-09"
+ },
+ {
+  "ats": "greenhouse",
+  "token": "kinelo",
+  "via": "auto-discovered",
+  "first_seen": "2026-07-09"
+ },
+ {
+  "ats": "greenhouse",
+  "token": "doubleverify",
+  "via": "auto-discovered",
+  "first_seen": "2026-07-09"
+ },
+ {
+  "ats": "greenhouse",
+  "token": "novacredit",
+  "via": "auto-discovered",
+  "first_seen": "2026-07-09"
+ },
+ {
+  "ats": "lever",
+  "token": "findigs",
+  "via": "auto-discovered",
+  "first_seen": "2026-07-09"
+ },
+ {
+  "ats": "lever",
+  "token": "electric-twin",
+  "via": "auto-discovered",
+  "first_seen": "2026-07-09"
+ },
+ {
+  "ats": "lever",
+  "token": "ro",
+  "via": "auto-discovered",
+  "first_seen": "2026-07-09"
+ },
+ {
+  "ats": "lever",
+  "token": "distru",
+  "via": "auto-discovered",
+  "first_seen": "2026-07-09"
+ },
+ {
+  "ats": "ashby",
+  "token": "oscilar",
+  "via": "auto-discovered",
+  "first_seen": "2026-07-09"
+ },
+ {
+  "ats": "ashby",
+  "token": "opsmill",
+  "via": "auto-discovered",
+  "first_seen": "2026-07-09"
+ },
+ {
+  "ats": "ashby",
+  "token": "ditto",
+  "via": "auto-discovered",
+  "first_seen": "2026-07-09"
+ },
+ {
+  "ats": "ashby",
+  "token": "livekit",
+  "via": "auto-discovered",
+  "first_seen": "2026-07-09"
+ },
+ {
+  "ats": "ashby",
+  "token": "hive.co",
+  "via": "auto-discovered",
+  "first_seen": "2026-07-09"
+ },
+ {
+  "ats": "ashby",
+  "token": "norm-ai",
+  "via": "auto-discovered",
+  "first_seen": "2026-07-09"
+ },
+ {
+  "ats": "ashby",
+  "token": "category-labs",
+  "via": "auto-discovered",
+  "first_seen": "2026-07-09"
+ },
+ {
+  "ats": "ashby",
+  "token": "permitflow",
+  "via": "auto-discovered",
+  "first_seen": "2026-07-09"
+ },
+ {
+  "ats": "ashby",
+  "token": "confido",
+  "via": "auto-discovered",
+  "first_seen": "2026-07-09"
+ },
+ {
+  "ats": "ashby",
+  "token": "amo",
+  "via": "auto-discovered",
+  "first_seen": "2026-07-09"
+ },
+ {
+  "ats": "ashby",
+  "token": "colonist",
+  "via": "auto-discovered",
+  "first_seen": "2026-07-09"
+ },
+ {
+  "ats": "ashby",
+  "token": "radical-numerics",
+  "via": "auto-discovered",
+  "first_seen": "2026-07-09"
+ },
+ {
+  "ats": "ashby",
+  "token": "kog",
+  "via": "auto-discovered",
+  "first_seen": "2026-07-09"
+ },
+ {
+  "ats": "ashby",
+  "token": "runway-ml",
+  "via": "auto-discovered",
+  "first_seen": "2026-07-09"
+ },
+ {
+  "ats": "ashby",
+  "token": "lago",
+  "via": "auto-discovered",
+  "first_seen": "2026-07-09"
+ },
+ {
+  "ats": "ashby",
+  "token": "pear-vc",
+  "via": "auto-discovered",
+  "first_seen": "2026-07-09"
+ },
+ {
+  "ats": "ashby",
+  "token": "9-mothers",
+  "via": "auto-discovered",
+  "first_seen": "2026-07-09"
+ },
+ {
+  "ats": "ashby",
+  "token": "complement",
+  "via": "auto-discovered",
+  "first_seen": "2026-07-09"
+ },
+ {
+  "ats": "ashby",
+  "token": "railway",
+  "via": "auto-discovered",
+  "first_seen": "2026-07-09"
+ },
+ {
+  "ats": "ashby",
+  "token": "spruceid",
+  "via": "auto-discovered",
+  "first_seen": "2026-07-09"
+ },
+ {
+  "ats": "ashby",
+  "token": "solace",
+  "via": "auto-discovered",
+  "first_seen": "2026-07-09"
+ },
+ {
+  "ats": "ashby",
+  "token": "oneleet",
+  "via": "auto-discovered",
+  "first_seen": "2026-07-09"
+ },
+ {
+  "ats": "ashby",
+  "token": "hiya",
+  "via": "auto-discovered",
+  "first_seen": "2026-07-09"
+ },
+ {
+  "ats": "ashby",
+  "token": "middesk",
+  "via": "auto-discovered",
+  "first_seen": "2026-07-09"
+ },
+ {
+  "ats": "ashby",
+  "token": "onecrew",
+  "via": "auto-discovered",
+  "first_seen": "2026-07-09"
+ },
+ {
+  "ats": "ashby",
+  "token": "aureliussystems",
+  "via": "auto-discovered",
+  "first_seen": "2026-07-09"
+ },
+ {
+  "ats": "ashby",
+  "token": "antithesis",
+  "via": "auto-discovered",
+  "first_seen": "2026-07-09"
+ },
+ {
+  "ats": "ashby",
+  "token": "duck-duck-go",
+  "via": "auto-discovered",
+  "first_seen": "2026-07-09"
+ },
+ {
+  "ats": "ashby",
+  "token": "rho",
+  "via": "auto-discovered",
+  "first_seen": "2026-07-09"
+ },
+ {
+  "ats": "ashby",
+  "token": "wirescreen",
+  "via": "auto-discovered",
+  "first_seen": "2026-07-09"
+ }
 ]
