@@ -1,0 +1,10 @@
+{
+  "name": "job-scout-materials",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Isolated resume/cover-letter PDF builder (docx + LibreOffice). Kept separate so the core scout stays zero-dependency.",
+  "engines": { "node": ">=20" },
+  "dependencies": {
+    "docx": "^9.5.1"
+  }
+}

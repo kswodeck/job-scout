@@ -31,12 +31,19 @@ jobs:
       - name: Install Claude Code CLI
         run: npm install -g @anthropic-ai/claude-code
 
+      # Only needed when materials.enabled — installs the isolated docx builder.
+      # Harmless (fast) when the feature is off.
+      - name: Install materials builder deps
+        run: npm ci --prefix materials
+
       - name: Run scout
         env:
           # Subscription mode (default): set CLAUDE_CODE_OAUTH_TOKEN (from `claude setup-token`).
           # API mode (config llm.transport="api"): set ANTHROPIC_API_KEY instead.
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          # Autonomous draft materials -> Google Drive (only when materials.enabled).
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
           LOOKBACK_DAYS: ${{ inputs.lookback_days }}
         run: node src/scout.js
 

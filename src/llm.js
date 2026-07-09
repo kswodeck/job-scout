@@ -143,4 +143,9 @@ function costSummary(cfg) {
   return { total, subscription: false, detail: parts.join(", ") };
 }
 
-module.exports = { screenBatch, scoreBatch, chunk, costSummary };
+// Generic single-prompt call (used by the materials generator). Returns raw text.
+async function runPrompt(cfg, tier, system, user, maxTokens) {
+  return callLLM(cfg, tier, system, user, maxTokens);
+}
+
+module.exports = { screenBatch, scoreBatch, chunk, costSummary, runPrompt };
