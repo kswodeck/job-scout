@@ -169,6 +169,17 @@ const argVal = f => { const i = args.indexOf(f); return i > -1 ? args[i + 1] : u
     console.log("No matches \u2014 no digest issue today (set digest_when_empty to change).");
   }
 
+  // ---- 8.5 Append 60+ matches to the Job Application Tracker sheet ----
+  // Non-fatal like the materials stage. Needs cfg.tracker.enabled, a native
+  // Google Sheet id in cfg.tracker.spreadsheet_id, and the same
+  // GOOGLE_SERVICE_ACCOUNT_JSON secret (see README "Google integration").
+  if (cfg.tracker?.enabled) {
+    try {
+      const { appendToTracker } = require("./tracker");
+      await appendToTracker(matches, cfg);
+    } catch (e) { console.log(`Tracker stage error (non-fatal): ${e.message}`); }
+  }
+
   // ---- 9. Autonomous DRAFT application materials for strong matches ----
   // Runs last and is fully non-fatal: a failure here never affects the digest or
   // state. Uploads DRAFT-labeled DOCX to a Drive review folder; Kris reviews before

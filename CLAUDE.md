@@ -32,6 +32,9 @@ Nightly autonomous job-discovery agent for Kris Swodeck's job search (front-end/
 | `src/state.js` | `data/*.json` persistence, 120-day seen pruning, watchlist growth |
 | `src/digest.js` | `digest.md` + `digest_title.txt` (workflow posts as issue) + cumulative `data/matches.md` |
 | `src/util.js` | fetch helpers, HTML→text (entity-decode FIRST — Greenhouse ships entity-encoded HTML), title-family normalizer |
+| `src/tracker.js` | Appends 60+ matches as `Radar` rows to the Job Application Tracker Google Sheet (Sheets API `values.append`, service-account auth from `drive.js`) |
+| `src/materials.js` + `src/drive.js` + `materials/` | Tailored DRAFT resume + cover letter DOCX per 60+ match → Drive review folder (layered anti-fabrication; `materials/` is the one sanctioned npm island) |
+| `src/applied.js` | Already-applied dedup against `data/applied.json` (snapshot of the tracker; rebuild via `scripts/build-applied.js`) |
 | `.github/workflows/scout.yml` | Nightly cron `30 11 * * *` (~6:30am CDT), installs Claude Code CLI, runs scout, commits `data/`, opens issue |
 
 ## Data & state semantics
@@ -43,6 +46,7 @@ Nightly autonomous job-discovery agent for Kris Swodeck's job search (front-end/
 - First-run detection: empty `seen.json` → uses `first_run_lookback_days` (14) instead of `lookback_days` (also 14 since 2026-07-10; they can diverge again if the nightly window is ever narrowed).
 - Duplicate suppression: company + de-seniorized title family, 30-day window against `matches.json`.
 - `--no-llm` = preview: fetch + prefilter only, writes a preview digest, **no state writes**.
+- **Google integration (tracker append + materials), 2026-07-10:** both stages are `enabled` in config but self-skip with a log line until (a) the `GOOGLE_SERVICE_ACCOUNT_JSON` secret exists and (b) for the tracker, `tracker.spreadsheet_id` is set. Kris's tracker was verified to be an **`.xlsx`** (Sheets API can't write those) shared **anyone-with-link=writer** (flagged; should be Restricted) — he must convert it to a native Sheet, share it + the Drive folder with the SA's `client_email` as Editor, and put the new sheet ID in config (full runbook in README "Google integration"). **Never ask Kris to paste the SA key JSON into a conversation** — same rule as the OAuth token: he sets the secret directly. Tracker rows mirror his manual format: Status `Radar`, Priority High (70+)/Medium, `NN/100 <verdict>` in Notes, score in Rank; tab name `Applications`.
 
 ## LLM transports
 
