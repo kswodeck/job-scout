@@ -6,13 +6,17 @@ const TITLE_POS = /(front[\s-]?end|\bweb\s+(developer|engineer)\b|javascript|typ
 const TITLE_NEG = /(sdet|\bqa\b|quality\s+(assurance|engineer)|test\s+(engineer|automation)|\.net\b|\bc#|c\+\+|\bgolang\b|\bgo\s+(developer|engineer)\b|full[\s-]?stack|back[\s-]?end|server[\s-]?side|forward[\s-]?deployed|developer\s+advocate|dev\s?rel|solutions?\s+engineer|sales\s+engineer|\bandroid\b|\bios\b|mobile\s+(engineer|developer)|react\s+native|flutter|data\s+(engineer|scientist|analyst)|analytics\s+engineer|devops|\bsre\b|site\s+reliability|infrastructure\s+engineer|security\s+engineer|machine\s+learning|\bml\s+engineer|\bembedded\b|firmware|salesforce|servicenow|\bsap\b|drupal|magento|\bphp\b|ruby\s+on\s+rails|\brails\b|django|\bjava\s+(developer|engineer)\b|kotlin|\bswift\b|blockchain|solidity|\bunity\b|unreal|game\s+developer|wordpress\s+developer|dynamics\s+365|\bror\b|\bruby\b|\belixir\b|\brust\b|\bscala\b|\bclojure\b|\bhaskell\b|\berlang\b|\bdatabricks\b|python\s+(developer|engineer))/i;
 
 // Non-IC roles are out; principal/staff/architect are left to the LLM (seniority
-// alignment is a scored rubric dimension, not a hard kill).
-const NON_IC = /\b(engineering\s+manager|director|head\s+of|vp\b|vice\s+president|chief\b|cto\b)\b/i;
+// alignment is a scored rubric dimension, not a hard kill). Manager coverage is
+// deliberately scoped to engineering-flavored manager titles ("Development
+// Manager", "Manager, Software Engineering") so product-name titles like
+// "Software Engineer, Ads Manager" survive.
+const NON_IC = /\b((engineering|development|software|team|web)\s+manager|manager,?\s+(of\s+)?(software|engineering|development|web)|director|head\s+of|vp\b|vice\s+president|chief\b|cto\b)\b/i;
 
 // Seniority targeting: Kris targets Mid/Senior IC. Principal, Staff, and Lead
-// (incl. Tech Lead) sit outside that band and are out. Plain/unmarked titles
-// (e.g. "Software Engineer", "Senior Frontend Engineer") are kept.
-const SENIORITY_EXCL = /\b(principal|staff|lead)\b/i;
+// (incl. Tech Lead) sit outside that band and are out; "Founding" engineer roles
+// (earliest-stage, equity-heavy, over-scoped) stay out per the original rule.
+// Plain/unmarked titles (e.g. "Software Engineer", "Senior Frontend Engineer") are kept.
+const SENIORITY_EXCL = /\b(principal|staff|lead|founding)\b/i;
 
 const US_HINTS = /(usa|u\.s\.|united states|us[\s-]?only|us[\s-]?based|north america|americas|worldwide|anywhere|global|dallas|fort worth|dfw|texas|\bremote\b)/i;
 const NON_US_ONLY = /(europe|emea|\buk\b|united kingdom|\bcanada\b|latam|apac|\basia\b|india|germany|poland|spain|portugal|france|netherlands|philippines|brazil|mexico|argentina|colombia|australia|nigeria|kenya|pakistan|ukraine|romania|vietnam|indonesia|egypt|south africa|\bcet\b|\beet\b)/i;
@@ -65,7 +69,7 @@ function passes(job, cfg) {
     if (HN_REGION_EXCL.test(job.text)) return { pass: false, reason: "hn: remote scoped outside US" };
     if (NON_IC.test(title)) return { pass: false, reason: "non-IC title" };
     // HN title is a best-effort guess, so these apply to the guessed role only.
-    if (SENIORITY_EXCL.test(title)) return { pass: false, reason: "seniority: principal/staff/lead" };
+    if (SENIORITY_EXCL.test(title)) return { pass: false, reason: "seniority: principal/staff/lead/founding" };
     if (/full[\s-]?stack|back[\s-]?end|forward[\s-]?deployed/i.test(title)) return { pass: false, reason: "hn: full-stack/back-end/forward-deployed" };
     // Drop informal posts with no way to apply (no link, no email — just a reply field).
     if (!/https?:\/\//i.test(job.text) && !/[\w.+-]+@[\w-]+\.[a-z]{2,}/i.test(job.text)) return { pass: false, reason: "hn: no apply link" };
@@ -75,10 +79,11 @@ function passes(job, cfg) {
   if (!TITLE_POS.test(title)) return { pass: false, reason: "title: not FE/JS/SWE" };
   if (TITLE_NEG.test(title)) return { pass: false, reason: "title: excluded specialty" };
   if (NON_IC.test(title)) return { pass: false, reason: "non-IC title" };
-  if (SENIORITY_EXCL.test(title)) return { pass: false, reason: "seniority: principal/staff/lead" };
+  if (SENIORITY_EXCL.test(title)) return { pass: false, reason: "seniority: principal/staff/lead/founding" };
   // Location gate (remote-US or DFW/~45mi Arlington; hybrid/on-site elsewhere out).
-  // Fold the ATS isRemote flag into the haystack so a remote-flagged board posting
-  // isn't dropped for naming an office city.
+  // Fold the fetcher's isRemote flag into the haystack so a remote-flagged board
+  // posting (Ashby isRemote, EdTech.com nationwide-"US") isn't dropped for naming
+  // an office city. This strict gate replaced the per-board requireRemote check.
   const locHay = (job.isRemoteFlag ? "remote " : "") + (job.location || "");
   if (!locationOk(locHay)) return { pass: false, reason: `location: ${job.location || "?"}` };
 

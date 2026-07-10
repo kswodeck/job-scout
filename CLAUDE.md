@@ -6,8 +6,9 @@ Nightly autonomous job-discovery agent for Kris Swodeck's job search (front-end/
 
 ## Current status (built 2026-07-08 in a Claude.ai session)
 
-- **NOT yet deployed.** No repo, no secrets, never run in GitHub Actions. Deployment is the first job (see runbook below).
+- **Deployed and running nightly** — the workflow has committed `data/` state since 2026-07-09 (the "NOT yet deployed" status this section originally carried is obsolete; the runbook below is kept for reference/re-deployment).
 - All feed endpoints and field names were **live-verified 2026-07-08** (details in `src/sources.js` comments). Notable: Remotive's correct category slug is `software-development` (not `software-dev`), and their public API currently serves only ~28 recent listings — a legitimately low-volume contributor.
+- **2026-07-10 expansion:** lookback widened to 14 days (both knobs), and two sources added after live feed + ToS verification: **EdTech.com** (`/feed` RSS — no per-item dates, so newness is purely the `seen.json` set-diff; IDs are hashes of link+company+title because bare applyLinks collide) and **Christian Tech Jobs** (`/api/rss`, expressly allowed by their robots.txt; company parsed from URL slug). LinkedIn, Indeed, Wellfound, Built In, Welcome to the Jungle, and Getro boards (jobs.highfivepartners.com) were checked the same day: all prohibit automated access in ToS and/or hard-block bots → stay manual via email alerts.
 - The full pipeline (fetch → prefilter → batched screen/score → dedupe → caps/deferral → state writes → digest) was tested end-to-end against live feeds using a **shimmed `claude` CLI returning canned JSON**. Real LLM calls have **never** run with real auth — the first real scoring happens at deployment. Treat early scores as unvalidated; spot-check.
 - Lever boards: endpoint shape verified live (a valid empty array); the field mapping (`text`, `hostedUrl`, `categories.location`, `createdAt`, `descriptionPlain`) comes from Lever's docs, not live observation. The first Lever board the watchlist discovers will confirm it — check that night's log.
 
@@ -24,13 +25,16 @@ Nightly autonomous job-discovery agent for Kris Swodeck's job search (front-end/
 | File | Role |
 |---|---|
 | `src/scout.js` | Orchestrator + CLI flags (`--no-llm`, `--lookback N`, `--digest-always`; env `LOOKBACK_DAYS`) |
-| `src/sources.js` | Fetchers: Remotive, RemoteOK, WWR RSS, HN Who's Hiring (Algolia, incremental cursor), ATS boards (Greenhouse/Lever/Ashby), + `scanForATSTokens` regex discovery |
-| `src/prefilter.js` | Free local gate: `TITLE_POS`/`TITLE_NEG`/`NON_IC` regexes, location logic, structured-salary floor, `ats_require_remote`, HN full-text mode |
+| `src/sources.js` | Fetchers: Remotive, RemoteOK, WWR RSS, EdTech.com RSS, ChristianTechJobs RSS, HN Who's Hiring (Algolia, incremental cursor), ATS boards (Greenhouse/Lever/Ashby), + `scanForATSTokens` regex discovery |
+| `src/prefilter.js` | Free local gate: `TITLE_POS`/`TITLE_NEG`/`NON_IC`/`SENIORITY_EXCL` regexes, strict location gate (remote-US or ~45 mi of Arlington TX; hybrid counts as in-office), structured-salary floor, HN full-text + apply-link mode |
 | `src/rubric.js` | Batch prompts: screen gate (pass/fail per posting) + full scorecard (Kris's rubric, strict JSON array out) |
 | `src/llm.js` | Dual transport (`claude-cli` spawn / direct `api` fetch), batching, retries, fail-open screen / fail-closed score, prompt+token accounting |
 | `src/state.js` | `data/*.json` persistence, 120-day seen pruning, watchlist growth |
 | `src/digest.js` | `digest.md` + `digest_title.txt` (workflow posts as issue) + cumulative `data/matches.md` |
 | `src/util.js` | fetch helpers, HTML→text (entity-decode FIRST — Greenhouse ships entity-encoded HTML), title-family normalizer |
+| `src/tracker.js` | Appends 60+ matches as `Radar` rows to the Job Application Tracker Google Sheet (Sheets API `values.append`, service-account auth from `drive.js`) |
+| `src/materials.js` + `src/drive.js` + `materials/` | Tailored DRAFT resume + cover letter DOCX per 60+ match → Drive review folder (layered anti-fabrication; `materials/` is the one sanctioned npm island) |
+| `src/applied.js` | Already-applied dedup against `data/applied.json` (snapshot of the tracker; rebuild via `scripts/build-applied.js`) |
 | `.github/workflows/scout.yml` | Nightly cron `30 11 * * *` (~6:30am CDT), installs Claude Code CLI, runs scout, commits `data/`, opens issue |
 
 ## Data & state semantics
@@ -39,9 +43,10 @@ Nightly autonomous job-discovery agent for Kris Swodeck's job search (front-end/
 - `data/seen.json` — `id → date`. Everything fetched gets marked seen **except** jobs deferred by the screen cap, score cap, or a failed score call — those are un-seen so the next night retries them. Delete the file to force a full rescan (e.g. after loosening the prefilter).
 - `data/matches.json` — permanent log of every surfaced match; `data/matches.md` is regenerated from it.
 - `data/companies-discovered.json` — self-growing ATS watchlist: Greenhouse/Lever/Ashby board tokens regex-harvested from **all** fresh postings' text/URLs (HN comments are the main source), then polled directly every night. Seeds: `gitlab` (Greenhouse, verified, Vue shop), `linear` (Ashby, verified). Delete junk entries freely.
-- First-run detection: empty `seen.json` → uses `first_run_lookback_days` (7) instead of `lookback_days` (2).
+- First-run detection: empty `seen.json` → uses `first_run_lookback_days` (14) instead of `lookback_days` (also 14 since 2026-07-10; they can diverge again if the nightly window is ever narrowed).
 - Duplicate suppression: company + de-seniorized title family, 30-day window against `matches.json`.
 - `--no-llm` = preview: fetch + prefilter only, writes a preview digest, **no state writes**.
+- **Google integration (tracker append + materials), 2026-07-10:** both stages are `enabled` in config but self-skip with a log line until (a) the `GOOGLE_SERVICE_ACCOUNT_JSON` secret exists and (b) for the tracker, `tracker.spreadsheet_id` is set. Kris's tracker was verified to be an **`.xlsx`** (Sheets API can't write those) shared **anyone-with-link=writer** (flagged; should be Restricted) — he must convert it to a native Sheet, share it + the Drive folder with the SA's `client_email` as Editor, and put the new sheet ID in config (full runbook in README "Google integration"). **Never ask Kris to paste the SA key JSON into a conversation** — same rule as the OAuth token: he sets the secret directly. Tracker rows mirror his manual format: Status `Radar`, Priority High (70+)/Medium, `NN/100 <verdict>` in Notes, score in Rank; tab name `Applications`.
 
 ## LLM transports
 
@@ -69,8 +74,9 @@ Nightly autonomous job-discovery agent for Kris Swodeck's job search (front-end/
 
 ## Known limitations (be upfront with Kris)
 
-- Feeds are remote-heavy, so **DFW-local hybrid roles are under-covered**. LinkedIn/Indeed prohibit scraping — they stay manual via email alerts (optionally triaged in a Gmail-connected Claude.ai session).
-- vuejobs.com and christiantechjobs.io have no verified public feed. If asked to add them, **verify a feed/API exists and check ToS first** — do not scrape blindly.
+- Feeds are remote-heavy, so **DFW-local hybrid roles are under-covered**. LinkedIn/Indeed prohibit scraping — they stay manual via email alerts (optionally triaged in a Gmail-connected Claude.ai session). Same verdict, re-verified live 2026-07-10, for Wellfound (DataDome-blocked, ToS ban), Built In (public JSON API exists and works, but ToS prohibits automated use), Welcome to the Jungle (job data credential-gated; ToS ban), and Getro-hosted boards like jobs.highfivepartners.com (Getro ToS bans crawling any of its boards; 403s non-browser UAs; that board is mostly non-dev ed-sector roles anyway).
+- vuejobs.com has no verified public feed. If asked to add it (or any new board), **verify a feed/API exists and check ToS first** — do not scrape blindly. (christiantechjobs.io was re-checked 2026-07-10 and now IS covered via its robots.txt-allowed `/api/rss`.)
+- EdTech.com's feed carries no posting dates: its listings ignore the lookback window (pure `seen.json` set-diff), and `publishedAt` is empty on its jobs. Both EdTech.com and christiantechjobs.io license content for personal use — keep the repo/digests private and don't republish posting text.
 - HN parsing is best-effort: company/title fields on HN entries can be rough; the link always goes to the real comment.
 - Scores are the rubric run headless and are unvalidated until real runs accumulate.
 

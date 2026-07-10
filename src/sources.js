@@ -1,7 +1,9 @@
 // Job source fetchers. Every fetcher returns normalized jobs:
 // { id, source, via, company, title, url, location, salary, salaryMin, salaryMax,
 //   publishedAt (ISO), text (plain, capped), hnMode?, atsJob?, isRemoteFlag? }
-// All endpoints below were live-verified (field names included) on 2026-07-08.
+// All endpoints below were live-verified (field names included) on 2026-07-08;
+// EdTech.com and Christian Tech Jobs on 2026-07-10.
+const crypto = require("crypto");
 const { fetchText, fetchJson, htmlToText, prettyToken } = require("./util");
 
 const CAP = 9000; // chars of description kept per job
@@ -78,6 +80,95 @@ async function fetchWWR(cfg, sinceMs) {
         text: htmlToText(rssTag(it, "description")).slice(0, CAP),
       }));
     }
+  }
+  return out;
+}
+
+// ---------------- EdTech.com (RSS) ----------------------------------------------
+// https://www.edtech.com/feed serves the full active corpus (~1,900 items, ~15 MB)
+// as RSS 2.0 with custom item fields: jobTitle, companyName, jobType, applyLink,
+// location, description (entity-encoded plain text). robots.txt allows /feed —
+// Cloudflare gates the HTML pages but deliberately leaves /feed open to
+// non-browser clients — while /api/ is disallowed: never probe their API. ToS
+// (checked 2026-07-10) contains no scraping/automation clause.
+// Feed quirks (verified): NO per-item pubDate and NO guid, so lookback filtering
+// is impossible — newness is purely the set-diff against seen.json — and a bare
+// applyLink is NOT unique (one URL served two distinct jobs in a single
+// snapshot), so the id hashes link+company+title. The board lists many on-site
+// university roles; the prefilter's strict location gate (remote-US or DFW)
+// handles them. location is "US" (nationwide), "City, ST, US", or a bare ISO
+// country code; "US" usually means remote (~72% sampled), so isRemoteFlag lets
+// it pass as remote-ish and the LLM screen verifies against the description.
+async function fetchEdTech(seen) {
+  const xml = await fetchText("https://www.edtech.com/feed", { timeout: 90000 });
+  const out = [];
+  for (const m of xml.matchAll(/<item>([\s\S]*?)<\/item>/g)) {
+    const it = m[1];
+    const title = htmlToText(rssTag(it, "jobTitle"));
+    const company = htmlToText(rssTag(it, "companyName"));
+    const url = rssTag(it, "applyLink");
+    if (!title || !url) continue;
+    const location = htmlToText(rssTag(it, "location"));
+    const country = (location.split(",").pop() || "").trim();
+    if (/^[A-Z]{2}$/.test(country) && country !== "US") continue; // non-US listing
+    const id = `edtech:${crypto.createHash("sha1").update(`${url}|${company}|${title}`).digest("hex").slice(0, 16)}`;
+    if (seen[id]) continue;
+    const jobType = htmlToText(rssTag(it, "jobType"));
+    out.push(norm({
+      id, source: "edtech", via: "EdTech.com",
+      company, title, url, location,
+      isRemoteFlag: location === "US",
+      publishedAt: "",
+      text: ((jobType ? `Job type: ${jobType}\n` : "") + htmlToText(rssTag(it, "description"))).slice(0, CAP),
+    }));
+  }
+  return out;
+}
+
+// ---------------- Christian Tech Jobs (RSS) --------------------------------------
+// https://www.christiantechjobs.io/api/rss is the whole archive (~940 items back
+// to Oct 2024) as RSS 2.0: title, link (= guid = job URL), pubDate (RFC-822),
+// description (CDATA HTML: og-image, a "Tags:" skill line, then the posting).
+// robots.txt explicitly allows /api/rss while disallowing the rest of /api/, and
+// the ToS bans scraping only "except where expressly permitted" — one nightly
+// fetch of the allowed RSS is that permitted path. Their JSON API (/api/v1/jobs)
+// is 401 without a key: not usable. ToS licenses content for PERSONAL use —
+// keep this repo and its digest issues private. The feed is NOT strictly
+// newest-first (verified: 2 inversions), so every item is date-filtered
+// independently; never early-break on the first old item.
+// Company is not a field; it is parsed from the URL slug
+// ([remote-]<title-words>-<company-words>-<id>) by stripping title words — a
+// company whose name repeats a title word loses that word (rare; blank company
+// worst case).
+function ctjCompany(link, title) {
+  const slug = (link.split("/").pop() || "").toLowerCase().replace(/-\d+$/, "").replace(/^remote-/, "");
+  const titleWords = new Set(String(title).toLowerCase().replace(/[^a-z0-9]+/g, " ").trim().split(" "));
+  const words = slug.split("-").filter(Boolean);
+  let i = 0;
+  while (i < words.length && titleWords.has(words[i])) i++;
+  return prettyToken(words.slice(i).join(" "));
+}
+async function fetchChristianTechJobs(sinceMs) {
+  const xml = await fetchText("https://www.christiantechjobs.io/api/rss", { timeout: 60000 });
+  const out = [];
+  for (const m of xml.matchAll(/<item>([\s\S]*?)<\/item>/g)) {
+    const it = m[1];
+    const link = rssTag(it, "link");
+    if (!link) continue;
+    const pub = Date.parse(rssTag(it, "pubDate"));
+    if (Number.isFinite(pub) && pub < sinceMs) continue;
+    const title = htmlToText(rssTag(it, "title"));
+    const slug = link.split("/").pop() || "";
+    const idNum = (slug.match(/-(\d+)$/) || [])[1];
+    const text = htmlToText(rssTag(it, "description")).slice(0, CAP);
+    const remote = /^remote-/.test(slug) || /remote christian jobs/i.test(text.slice(0, 400));
+    out.push(norm({
+      id: `ctj:${idNum || link}`, source: "christiantechjobs", via: "ChristianTechJobs",
+      company: ctjCompany(link, title), title, url: link,
+      location: remote ? "Remote" : "", isRemoteFlag: remote,
+      publishedAt: Number.isFinite(pub) ? new Date(pub).toISOString() : "",
+      text,
+    }));
   }
   return out;
 }
@@ -185,4 +276,4 @@ function scanForATSTokens(jobs) {
   return [...uniq.values()];
 }
 
-module.exports = { fetchRemotive, fetchRemoteOK, fetchWWR, fetchHN, fetchATSBoards, scanForATSTokens };
+module.exports = { fetchRemotive, fetchRemoteOK, fetchWWR, fetchEdTech, fetchChristianTechJobs, fetchHN, fetchATSBoards, scanForATSTokens };

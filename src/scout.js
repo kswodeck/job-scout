@@ -4,7 +4,7 @@
 //   node src/scout.js --no-llm        free preview: fetch + prefilter only, no state writes
 //   node src/scout.js --lookback 7    override lookback window (also env LOOKBACK_DAYS)
 //   node src/scout.js --digest-always write digest.md even with zero matches
-const { fetchRemotive, fetchRemoteOK, fetchWWR, fetchHN, fetchATSBoards, scanForATSTokens } = require("./sources");
+const { fetchRemotive, fetchRemoteOK, fetchWWR, fetchEdTech, fetchChristianTechJobs, fetchHN, fetchATSBoards, scanForATSTokens } = require("./sources");
 const { passes, isStarred } = require("./prefilter");
 const { screenBatch, scoreBatch, chunk, costSummary } = require("./llm");
 const { buildDigest, writeDigest, writeMatchesMd } = require("./digest");
@@ -43,6 +43,8 @@ const argVal = f => { const i = args.indexOf(f); return i > -1 ? args[i + 1] : u
   if (src.remotive) tasks.push(["remotive", fetchRemotive(cfg, sinceMs)]);
   if (src.remoteok) tasks.push(["remoteok", fetchRemoteOK(sinceMs)]);
   if (src.wwr) tasks.push(["wwr", fetchWWR(cfg, sinceMs)]);
+  if (src.edtech) tasks.push(["edtech", fetchEdTech(st.seen)]);
+  if (src.christiantechjobs) tasks.push(["christiantechjobs", fetchChristianTechJobs(sinceMs)]);
   if (src.hn) tasks.push(["hn", fetchHN(cfg, st.misc.hn || {})]);
   if (src.ats_watchlist && st.companies.length) tasks.push(["ats", fetchATSBoards(st.companies, st.seen)]);
 
@@ -180,6 +182,17 @@ const argVal = f => { const i = args.indexOf(f); return i > -1 ? args[i + 1] : u
     console.log("digest.md written.");
   } else {
     console.log("No matches \u2014 no digest issue today (set digest_when_empty to change).");
+  }
+
+  // ---- 8.5 Append 60+ matches to the Job Application Tracker sheet ----
+  // Non-fatal like the materials stage. Needs cfg.tracker.enabled, a native
+  // Google Sheet id in cfg.tracker.spreadsheet_id, and the same
+  // GOOGLE_SERVICE_ACCOUNT_JSON secret (see README "Google integration").
+  if (cfg.tracker?.enabled) {
+    try {
+      const { appendToTracker } = require("./tracker");
+      await appendToTracker(matches, cfg);
+    } catch (e) { console.log(`Tracker stage error (non-fatal): ${e.message}`); }
   }
 
   // ---- 9. Autonomous DRAFT application materials for strong matches ----
