@@ -2,7 +2,7 @@ name: Job Scout
 
 on:
   schedule:
-    - cron: "30 11 * * *" # ~6:30am Central during CDT (5:30am during CST)
+    - cron: "0 11 * * *" # 6:00am Central during CDT (5:00am during CST)
   workflow_dispatch:
     inputs:
       lookback_days:
