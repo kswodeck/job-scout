@@ -62,10 +62,11 @@ function passes(job, cfg) {
   if (SENIORITY_EXCL.test(title)) return { pass: false, reason: "seniority: principal/staff/founding" };
   if (!locationOk(job.location)) return { pass: false, reason: `location: ${job.location}` };
 
-  // ATS boards list every location incl. on-site; require remote/DFW signals there.
-  if (job.atsJob && cfg.ats_require_remote) {
+  // Boards that list on-site roles too (ATS boards, EdTech.com) must show a
+  // remote/DFW signal; requireRemote is set by the fetcher for mixed boards.
+  if ((job.atsJob && cfg.ats_require_remote) || job.requireRemote) {
     const remoteish = job.isRemoteFlag || REMOTE_OR_DFW.test(job.location) || REMOTE_OR_DFW.test(job.text.slice(0, 600));
-    if (!remoteish) return { pass: false, reason: `ats: not remote/DFW (${job.location || "no location"})` };
+    if (!remoteish) return { pass: false, reason: `${job.source}: not remote/DFW (${job.location || "no location"})` };
   }
 
   if (job.salaryMax > 0 && job.salaryMax >= 30000 && job.salaryMax < 80000)
