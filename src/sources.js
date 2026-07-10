@@ -82,6 +82,37 @@ async function fetchWWR(cfg, sinceMs) {
   return out;
 }
 
+// ---------------- Christian Tech Jobs (public RSS; robots.txt allows /api/rss) ---
+// Faith-based tech board (matches Kris's star keywords). RSS carries title/link/
+// pubDate + full JD in the description; company isn't a field, so derive it from
+// the URL slug (…-<company>-<id>) and let the scorer read the real name from the JD.
+async function fetchChristianTechJobs(cfg, sinceMs) {
+  let xml;
+  try { xml = await fetchText("https://www.christiantechjobs.io/api/rss"); }
+  catch (e) { console.log(`  christiantechjobs failed: ${e.message}`); return []; }
+  const out = [];
+  for (const m of xml.matchAll(/<item>([\s\S]*?)<\/item>/g)) {
+    const it = m[1];
+    const link = rssTag(it, "link");
+    if (!link) continue;
+    const pub = Date.parse(rssTag(it, "pubDate"));
+    if (Number.isFinite(pub) && pub < sinceMs) continue;
+    const title = htmlToText(rssTag(it, "title"));
+    const slug = (link.match(/\/([^/]+?)-\d+\/?$/) || [])[1] || "";
+    const company = prettyToken(slug.split("-").pop() || "") || "Christian Tech Jobs";
+    const text = htmlToText(rssTag(it, "description")).slice(0, CAP);
+    const remoteish = /\bremote\b/i.test(link) || /\bremote\b/i.test(text.slice(0, 400));
+    out.push(norm({
+      id: `ctj:${link}`, source: "ctj", via: "ChristianTechJobs",
+      company, title, url: link,
+      location: remoteish ? "Remote" : "",
+      publishedAt: Number.isFinite(pub) ? new Date(pub).toISOString() : "",
+      text,
+    }));
+  }
+  return out;
+}
+
 // ---------------- Hacker News "Who is hiring?" (Algolia API) --------------------
 async function fetchHN(cfg, hnState) {
   const s = await fetchJson("https://hn.algolia.com/api/v1/search_by_date?tags=story,author_whoishiring&query=who%20is%20hiring&hitsPerPage=4");
@@ -185,4 +216,4 @@ function scanForATSTokens(jobs) {
   return [...uniq.values()];
 }
 
-module.exports = { fetchRemotive, fetchRemoteOK, fetchWWR, fetchHN, fetchATSBoards, scanForATSTokens };
+module.exports = { fetchRemotive, fetchRemoteOK, fetchWWR, fetchChristianTechJobs, fetchHN, fetchATSBoards, scanForATSTokens };
