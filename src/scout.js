@@ -4,7 +4,7 @@
 //   node src/scout.js --no-llm        free preview: fetch + prefilter only, no state writes
 //   node src/scout.js --lookback 7    override lookback window (also env LOOKBACK_DAYS)
 //   node src/scout.js --digest-always write digest.md even with zero matches
-const { fetchRemotive, fetchRemoteOK, fetchWWR, fetchHN, fetchATSBoards, scanForATSTokens } = require("./sources");
+const { fetchRemotive, fetchRemoteOK, fetchWWR, fetchEdTech, fetchChristianTechJobs, fetchHN, fetchATSBoards, scanForATSTokens } = require("./sources");
 const { passes, isStarred } = require("./prefilter");
 const { screenBatch, scoreBatch, chunk, costSummary } = require("./llm");
 const { buildDigest, writeDigest, writeMatchesMd } = require("./digest");
@@ -43,6 +43,8 @@ const argVal = f => { const i = args.indexOf(f); return i > -1 ? args[i + 1] : u
   if (src.remotive) tasks.push(["remotive", fetchRemotive(cfg, sinceMs)]);
   if (src.remoteok) tasks.push(["remoteok", fetchRemoteOK(sinceMs)]);
   if (src.wwr) tasks.push(["wwr", fetchWWR(cfg, sinceMs)]);
+  if (src.edtech) tasks.push(["edtech", fetchEdTech(st.seen)]);
+  if (src.christiantechjobs) tasks.push(["christiantechjobs", fetchChristianTechJobs(sinceMs)]);
   if (src.hn) tasks.push(["hn", fetchHN(cfg, st.misc.hn || {})]);
   if (src.ats_watchlist && st.companies.length) tasks.push(["ats", fetchATSBoards(st.companies, st.seen)]);
 

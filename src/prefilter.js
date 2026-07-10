@@ -6,8 +6,11 @@ const TITLE_POS = /(front[\s-]?end|\bweb\s+(developer|engineer)\b|javascript|typ
 const TITLE_NEG = /(sdet|\bqa\b|quality\s+(assurance|engineer)|test\s+(engineer|automation)|\.net\b|\bc#|c\+\+|\bgolang\b|\bgo\s+(developer|engineer)\b|full[\s-]?stack|back[\s-]?end|server[\s-]?side|\bandroid\b|\bios\b|mobile\s+(engineer|developer)|react\s+native|flutter|data\s+(engineer|scientist|analyst)|analytics\s+engineer|devops|\bsre\b|site\s+reliability|infrastructure\s+engineer|security\s+engineer|machine\s+learning|\bml\s+engineer|\bembedded\b|firmware|salesforce|servicenow|\bsap\b|drupal|magento|\bphp\b|ruby\s+on\s+rails|\brails\b|django|\bjava\s+(developer|engineer)\b|kotlin|\bswift\b|blockchain|solidity|\bunity\b|unreal|game\s+developer|wordpress\s+developer|dynamics\s+365|\bror\b|\bruby\b|\belixir\b|\brust\b|\bscala\b|\bclojure\b|\bhaskell\b|\berlang\b|\bdatabricks\b|python\s+(developer|engineer))/i;
 
 // Non-IC roles are out; principal/staff/architect are left to the LLM (seniority
-// alignment is a scored rubric dimension, not a hard kill).
-const NON_IC = /\b(engineering\s+manager|director|head\s+of|vp\b|vice\s+president|chief\b|cto\b)\b/i;
+// alignment is a scored rubric dimension, not a hard kill). Manager coverage is
+// deliberately scoped to engineering-flavored manager titles ("Development
+// Manager", "Manager, Software Engineering") so product-name titles like
+// "Software Engineer, Ads Manager" survive.
+const NON_IC = /\b((engineering|development|software|team|web)\s+manager|manager,?\s+(of\s+)?(software|engineering|development|web)|director|head\s+of|vp\b|vice\s+president|chief\b|cto\b)\b/i;
 
 // Seniority targeting: Kris targets Mid/Senior IC. Principal and Staff sit above
 // that band; "Founding" engineer roles (earliest-stage, equity-heavy, over-scoped)
@@ -62,10 +65,11 @@ function passes(job, cfg) {
   if (SENIORITY_EXCL.test(title)) return { pass: false, reason: "seniority: principal/staff/founding" };
   if (!locationOk(job.location)) return { pass: false, reason: `location: ${job.location}` };
 
-  // ATS boards list every location incl. on-site; require remote/DFW signals there.
-  if (job.atsJob && cfg.ats_require_remote) {
+  // Boards that list on-site roles too (ATS boards, EdTech.com) must show a
+  // remote/DFW signal; requireRemote is set by the fetcher for mixed boards.
+  if ((job.atsJob && cfg.ats_require_remote) || job.requireRemote) {
     const remoteish = job.isRemoteFlag || REMOTE_OR_DFW.test(job.location) || REMOTE_OR_DFW.test(job.text.slice(0, 600));
-    if (!remoteish) return { pass: false, reason: `ats: not remote/DFW (${job.location || "no location"})` };
+    if (!remoteish) return { pass: false, reason: `${job.source}: not remote/DFW (${job.location || "no location"})` };
   }
 
   if (job.salaryMax > 0 && job.salaryMax >= 30000 && job.salaryMax < 80000)
