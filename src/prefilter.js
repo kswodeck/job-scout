@@ -13,10 +13,11 @@ const TITLE_NEG = /(sdet|\bqa\b|quality\s+(assurance|engineer)|test\s+(engineer|
 const NON_IC = /\b((engineering|development|software|team|web)\s+manager|manager,?\s+(of\s+)?(software|engineering|development|web)|director|head\s+of|vp\b|vice\s+president|chief\b|cto\b)\b/i;
 
 // Seniority targeting: Kris targets Mid/Senior IC. Principal, Staff, and Lead
-// (incl. Tech Lead) sit outside that band and are out; "Founding" engineer roles
-// (earliest-stage, equity-heavy, over-scoped) stay out per the original rule.
+// (incl. Tech Lead) sit outside that band and are out. "Founding" is deliberately
+// NOT filtered (Kris's call, 2026-07-10): those roles go to the LLM like any other
+// and live or die on the scored seniority/role-fit dimensions.
 // Plain/unmarked titles (e.g. "Software Engineer", "Senior Frontend Engineer") are kept.
-const SENIORITY_EXCL = /\b(principal|staff|lead|founding)\b/i;
+const SENIORITY_EXCL = /\b(principal|staff|lead)\b/i;
 
 const US_HINTS = /(usa|u\.s\.|united states|us[\s-]?only|us[\s-]?based|north america|americas|worldwide|anywhere|global|dallas|fort worth|dfw|texas|\bremote\b)/i;
 const NON_US_ONLY = /(europe|emea|\buk\b|united kingdom|\bcanada\b|latam|apac|\basia\b|india|germany|poland|spain|portugal|france|netherlands|philippines|brazil|mexico|argentina|colombia|australia|nigeria|kenya|pakistan|ukraine|romania|vietnam|indonesia|egypt|south africa|\bcet\b|\beet\b)/i;
@@ -69,7 +70,7 @@ function passes(job, cfg) {
     if (HN_REGION_EXCL.test(job.text)) return { pass: false, reason: "hn: remote scoped outside US" };
     if (NON_IC.test(title)) return { pass: false, reason: "non-IC title" };
     // HN title is a best-effort guess, so these apply to the guessed role only.
-    if (SENIORITY_EXCL.test(title)) return { pass: false, reason: "seniority: principal/staff/lead/founding" };
+    if (SENIORITY_EXCL.test(title)) return { pass: false, reason: "seniority: principal/staff/lead" };
     if (/full[\s-]?stack|back[\s-]?end|forward[\s-]?deployed/i.test(title)) return { pass: false, reason: "hn: full-stack/back-end/forward-deployed" };
     // Drop informal posts with no way to apply (no link, no email — just a reply field).
     if (!/https?:\/\//i.test(job.text) && !/[\w.+-]+@[\w-]+\.[a-z]{2,}/i.test(job.text)) return { pass: false, reason: "hn: no apply link" };
@@ -79,7 +80,7 @@ function passes(job, cfg) {
   if (!TITLE_POS.test(title)) return { pass: false, reason: "title: not FE/JS/SWE" };
   if (TITLE_NEG.test(title)) return { pass: false, reason: "title: excluded specialty" };
   if (NON_IC.test(title)) return { pass: false, reason: "non-IC title" };
-  if (SENIORITY_EXCL.test(title)) return { pass: false, reason: "seniority: principal/staff/lead/founding" };
+  if (SENIORITY_EXCL.test(title)) return { pass: false, reason: "seniority: principal/staff/lead" };
   // Location gate (remote-US or DFW/~45mi Arlington; hybrid/on-site elsewhere out).
   // Fold the fetcher's isRemote flag into the haystack so a remote-flagged board
   // posting (Ashby isRemote, EdTech.com nationwide-"US") isn't dropped for naming

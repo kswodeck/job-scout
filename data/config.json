@@ -2,7 +2,7 @@
   "lookback_days": 14,
   "first_run_lookback_days": 14,
   "min_score": 55,
-  "digest_when_empty": false,
+  "digest_when_empty": true,
   "llm": {
     "transport": "claude-cli",
     "cli_models": { "screen": "haiku", "score": "sonnet" },
