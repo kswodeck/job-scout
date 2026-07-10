@@ -6,7 +6,7 @@ Nightly broad-discovery job agent. Sweeps public job feeds, filters and scores e
 
 **Two ways to pay for the LLM calls** (`llm.transport` in `data/config.json`):
 
-- **`"claude-cli"` (default — $0):** runs prompts through the Claude Code CLI authenticated with your existing Claude Pro/Max subscription. Generate a long-lived token once with `claude setup-token` (official, made for CI) and add it as the `CLAUDE_CODE_OAUTH_TOKEN` repo secret. Usage draws from your subscription's rolling limits instead of billing dollars — batching keeps a typical night to roughly 6–15 prompts, and the run fires at ~6:30am when you're not using the quota. GitHub Actions itself is free at this scale (private repos get 2,000 free minutes/month; this uses ~5/night).
+- **`"claude-cli"` (default — $0):** runs prompts through the Claude Code CLI authenticated with your existing Claude Pro/Max subscription. Generate a long-lived token once with `claude setup-token` (official, made for CI) and add it as the `CLAUDE_CODE_OAUTH_TOKEN` repo secret. Usage draws from your subscription's rolling limits instead of billing dollars — batching keeps a typical night to roughly 6–15 prompts, and the run fires at ~6am when you're not using the quota. GitHub Actions itself is free at this scale (private repos get 2,000 free minutes/month; this uses ~5/night).
 - **`"api"`:** direct Anthropic API with an `ANTHROPIC_API_KEY` secret. Pay-as-you-go (~$0.10–0.50/night), fully independent of your subscription limits, no CLI dependency.
 
 If a night's run hits your subscription limit or a call fails, unscored jobs are left unseen and automatically retried the next night.
@@ -34,7 +34,7 @@ If a night's run hits your subscription limit or a call fails, unscored jobs are
 3. Repo → Settings → Secrets and variables → Actions → New repository secret: `CLAUDE_CODE_OAUTH_TOKEN` with that value. *(API mode instead: secret `ANTHROPIC_API_KEY` and set `llm.transport` to `"api"`.)*
 4. Actions tab → enable workflows if prompted.
 5. First run: Actions → Job Scout → **Run workflow** (optionally set lookback, e.g. `14`). Watch the log.
-6. Done. It runs nightly at ~6:30am Central and opens an issue only on days with matches. Star-⭐ flags mark Vue/Nuxt/EdTech/faith-keyword hits.
+6. Done. It runs nightly at 6:00am Central (5:00am in winter) and opens a digest issue each morning. Star-⭐ flags mark Vue/Nuxt/EdTech/faith-keyword hits.
 
 ## Google integration (tracker rows + tailored materials) — one-time setup
 
