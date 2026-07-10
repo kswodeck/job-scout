@@ -82,17 +82,19 @@ function parseJsonArrayLoose(text) {
   return arr;
 }
 
-// Screen a chunk. Returns array of booleans aligned to jobs; on total failure,
-// fails OPEN (all pass) — the scorer is the real gate and caps bound the cost.
+// Screen a chunk. Returns array of {pass, reason} aligned to jobs; on total
+// failure, fails OPEN (all pass) — the scorer is the real gate and caps bound
+// the cost. The reason is Haiku's own short justification, surfaced in the log
+// and digest so screen rejections are auditable.
 async function screenBatch(jobs, cfg) {
   try {
     const out = await callLLM(cfg, "screen", SCREEN_SYSTEM, screenBatchUser(jobs), 1200);
     const arr = parseJsonArrayLoose(out);
-    const byI = new Map(arr.map(x => [Number(x.i), !!x.pass]));
-    return jobs.map((_, k) => byI.has(k + 1) ? byI.get(k + 1) : true);
+    const byI = new Map(arr.map(x => [Number(x.i), { pass: !!x.pass, reason: String(x.reason || "").slice(0, 200) }]));
+    return jobs.map((_, k) => byI.get(k + 1) || { pass: true, reason: "" });
   } catch (e) {
     console.log(`  screen batch failed (${e.message}) — passing ${jobs.length} through`);
-    return jobs.map(() => true);
+    return jobs.map(() => ({ pass: true, reason: "" }));
   }
 }
 

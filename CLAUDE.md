@@ -35,7 +35,7 @@ Nightly autonomous job-discovery agent for Kris Swodeck's job search (front-end/
 | `src/tracker.js` | Appends 60+ matches as `Radar` rows to the Job Application Tracker Google Sheet (Sheets API `values.append`, service-account auth from `drive.js`) |
 | `src/materials.js` + `src/drive.js` + `materials/` | Tailored DRAFT resume + cover letter DOCX per 60+ match → Drive review folder (layered anti-fabrication; `materials/` is the one sanctioned npm island) |
 | `src/applied.js` | Already-applied dedup against `data/applied.json` (snapshot of the tracker; rebuild via `scripts/build-applied.js`) |
-| `.github/workflows/scout.yml` | Nightly cron `0 11 * * *` (6:00am CDT / 5:00am CST), installs Claude Code CLI, runs scout, commits `data/`, opens issue |
+| `.github/workflows/scout.yml` | Nightly cron `0 9 * * *` (4:00am CDT / 3:00am CST; GitHub often fires 1–2h late on quiet repos), installs Claude Code CLI, runs scout, commits `data/`, opens issue |
 
 ## Data & state semantics
 

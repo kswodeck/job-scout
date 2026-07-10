@@ -23,7 +23,7 @@ function jobBlock(m) {
   return s + "\n";
 }
 
-function buildDigest({ date, matches, skippedScored, stats, cost, preview }) {
+function buildDigest({ date, matches, skippedScored, screenFails = [], stats, cost, preview }) {
   const strong = matches.filter(m => m.score >= 70);
   const worth = matches.filter(m => m.score < 70);
   const title = preview
@@ -59,6 +59,16 @@ function buildDigest({ date, matches, skippedScored, stats, cost, preview }) {
     md += `<details><summary>Scored but skipped (${skippedScored.length})</summary>\n\n`;
     for (const m of skippedScored) {
       md += `- ${m.score} \u2014 ${esc(m.company)} \u2014 [${esc(m.title)}](${m.url}) \u2014 ${esc(m.red_flags?.[0] || m.deductions?.[0] || "below bar")}\n`;
+    }
+    md += `\n</details>\n`;
+  }
+
+  // Screen rejections, with Haiku's own one-line reason \u2014 the audit trail for
+  // "why didn't X show up", without opening the Actions log.
+  if (screenFails.length) {
+    md += `<details><summary>Failed the screen (${screenFails.length})</summary>\n\n`;
+    for (const f of screenFails) {
+      md += `- ${esc(f.company)} \u2014 [${esc(f.title)}](${f.url}) \u00b7 via ${f.via} \u2014 ${esc(f.reason)}\n`;
     }
     md += `\n</details>\n`;
   }

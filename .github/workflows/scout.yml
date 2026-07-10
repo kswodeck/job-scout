@@ -2,7 +2,7 @@ name: Job Scout
 
 on:
   schedule:
-    - cron: "0 11 * * *" # 6:00am Central during CDT (5:00am during CST)
+    - cron: "0 9 * * *" # 4:00am Central during CDT (3:00am during CST); GitHub cron often fires 1-2h late on quiet repos
   workflow_dispatch:
     inputs:
       lookback_days:

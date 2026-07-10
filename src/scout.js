@@ -116,10 +116,14 @@ const argVal = f => { const i = args.indexOf(f); return i > -1 ? args[i + 1] : u
 
   const toScreen = deduped.slice(0, cfg.max_llm_screens_per_run);
   if (deduped.length > toScreen.length) console.log(`Screen cap: ${deduped.length - toScreen.length} deferred to future runs`);
-  const screened = [];
+  const screened = [], screenFails = [];
   for (const batch of chunk(toScreen, cfg.llm.screen_batch)) {
-    const passes = await screenBatch(batch, cfg);
-    batch.forEach((j, k) => { if (passes[k]) screened.push(j); });
+    const results = await screenBatch(batch, cfg);
+    batch.forEach((j, k) => {
+      if (results[k].pass) { screened.push(j); return; }
+      screenFails.push({ company: j.company, title: j.title, url: j.url, via: j.via, reason: results[k].reason || "no reason given" });
+      console.log(`  screen FAIL: ${j.company} — ${j.title} (${results[k].reason || "no reason given"})`);
+    });
   }
   stats.screened = screened.length;
   console.log(`Screen: ${screened.length}/${toScreen.length} passed`);
@@ -178,7 +182,7 @@ const argVal = f => { const i = args.indexOf(f); return i > -1 ? args[i + 1] : u
   console.log(`\nScored ${stats.scored}: ${matches.length} matches, ${skippedScored.length} skips. ${cost.subscription ? cost.detail : "Est. cost ~$" + cost.total.toFixed(2)}`);
   for (const m of matches) console.log(`  ${m.score} \u2014 ${m.company} \u2014 ${m.title}${m.stars.length ? " \u2B50" : ""}`);
   if (matches.length || flag("--digest-always") || cfg.digest_when_empty) {
-    writeDigest(buildDigest({ date: day, matches, skippedScored, stats, cost, preview: false }));
+    writeDigest(buildDigest({ date: day, matches, skippedScored, screenFails, stats, cost, preview: false }));
     console.log("digest.md written.");
   } else {
     console.log("No matches \u2014 no digest issue today (set digest_when_empty to change).");
