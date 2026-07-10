@@ -22,7 +22,6 @@
   "remotive_categories": ["software-development"],
   "wwr_categories": ["remote-front-end-programming-jobs", "remote-full-stack-programming-jobs", "remote-programming-jobs"],
   "hn_first_run_limit": 250,
-  "ats_require_remote": true,
   "max_llm_screens_per_run": 150,
   "max_scores_per_run": 40,
   "max_watchlist": 150,
@@ -36,7 +35,7 @@
   "tracker": {
     "enabled": true,
     "min_score": 60,
-    "spreadsheet_id": "",
+    "spreadsheet_id": "158F7G7x_xMZ2Mp9IMzDs7Jl-lKN1AU1jonUzDD1vu3M",
     "sheet_name": "Applications"
   }
 }

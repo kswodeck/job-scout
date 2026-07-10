@@ -1,6 +1,6 @@
 // Job source fetchers. Every fetcher returns normalized jobs:
 // { id, source, via, company, title, url, location, salary, salaryMin, salaryMax,
-//   publishedAt (ISO), text (plain, capped), hnMode?, atsJob?, isRemoteFlag?, requireRemote? }
+//   publishedAt (ISO), text (plain, capped), hnMode?, atsJob?, isRemoteFlag? }
 // All endpoints below were live-verified (field names included) on 2026-07-08;
 // EdTech.com and Christian Tech Jobs on 2026-07-10.
 const crypto = require("crypto");
@@ -95,10 +95,10 @@ async function fetchWWR(cfg, sinceMs) {
 // is impossible — newness is purely the set-diff against seen.json — and a bare
 // applyLink is NOT unique (one URL served two distinct jobs in a single
 // snapshot), so the id hashes link+company+title. The board lists many on-site
-// university roles: requireRemote makes the prefilter demand a remote/DFW
-// signal. location is "US" (nationwide), "City, ST, US", or a bare ISO country
-// code; "US" usually means remote (~72% sampled), so it passes as remote-ish
-// and the LLM screen verifies against the description.
+// university roles; the prefilter's strict location gate (remote-US or DFW)
+// handles them. location is "US" (nationwide), "City, ST, US", or a bare ISO
+// country code; "US" usually means remote (~72% sampled), so isRemoteFlag lets
+// it pass as remote-ish and the LLM screen verifies against the description.
 async function fetchEdTech(seen) {
   const xml = await fetchText("https://www.edtech.com/feed", { timeout: 90000 });
   const out = [];
@@ -117,7 +117,7 @@ async function fetchEdTech(seen) {
     out.push(norm({
       id, source: "edtech", via: "EdTech.com",
       company, title, url, location,
-      isRemoteFlag: location === "US", requireRemote: true,
+      isRemoteFlag: location === "US",
       publishedAt: "",
       text: ((jobType ? `Job type: ${jobType}\n` : "") + htmlToText(rssTag(it, "description"))).slice(0, CAP),
     }));

@@ -26,7 +26,7 @@ Nightly autonomous job-discovery agent for Kris Swodeck's job search (front-end/
 |---|---|
 | `src/scout.js` | Orchestrator + CLI flags (`--no-llm`, `--lookback N`, `--digest-always`; env `LOOKBACK_DAYS`) |
 | `src/sources.js` | Fetchers: Remotive, RemoteOK, WWR RSS, EdTech.com RSS, ChristianTechJobs RSS, HN Who's Hiring (Algolia, incremental cursor), ATS boards (Greenhouse/Lever/Ashby), + `scanForATSTokens` regex discovery |
-| `src/prefilter.js` | Free local gate: `TITLE_POS`/`TITLE_NEG`/`NON_IC` regexes, location logic, structured-salary floor, `ats_require_remote`, HN full-text mode |
+| `src/prefilter.js` | Free local gate: `TITLE_POS`/`TITLE_NEG`/`NON_IC`/`SENIORITY_EXCL` regexes, strict location gate (remote-US or ~45 mi of Arlington TX; hybrid counts as in-office), structured-salary floor, HN full-text + apply-link mode |
 | `src/rubric.js` | Batch prompts: screen gate (pass/fail per posting) + full scorecard (Kris's rubric, strict JSON array out) |
 | `src/llm.js` | Dual transport (`claude-cli` spawn / direct `api` fetch), batching, retries, fail-open screen / fail-closed score, prompt+token accounting |
 | `src/state.js` | `data/*.json` persistence, 120-day seen pruning, watchlist growth |

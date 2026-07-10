@@ -10,7 +10,7 @@ const { screenBatch, scoreBatch, chunk, costSummary } = require("./llm");
 const { buildDigest, writeDigest, writeMatchesMd } = require("./digest");
 const state = require("./state");
 const { todayISO, normFamily } = require("./util");
-const { loadAppliedSet, isAlreadyApplied } = require("./applied");
+const { loadAppliedSet, isAlreadyApplied, normCompany } = require("./applied");
 
 const args = process.argv.slice(2);
 const flag = f => args.includes(f);
@@ -145,6 +145,21 @@ const argVal = f => { const i = args.indexOf(f); return i > -1 ? args[i + 1] : u
   }
   matches.sort((a, b) => b.score - a.score);
   skippedScored.sort((a, b) => b.score - a.score);
+
+  // Keep only the best-scoring role per company. matches is sorted desc, so the
+  // first one seen for a company is its highest score; the rest are dropped.
+  const bestByCompany = new Map();
+  const keptMatches = [];
+  let companyCollapsed = 0;
+  for (const m of matches) {
+    const key = normCompany(m.company);
+    if (!key) { keptMatches.push(m); continue; }        // no company name -> keep as-is
+    if (bestByCompany.has(key)) { companyCollapsed++; continue; }
+    bestByCompany.set(key, m);
+    keptMatches.push(m);
+  }
+  if (companyCollapsed) console.log(`Company-collapse: dropped ${companyCollapsed} lower-scoring same-company role(s)`);
+  matches = keptMatches;
 
   // ---- 7. Persist: seen IDs (everything fetched this run), matches, HN cursor ----
   const day = todayISO();
