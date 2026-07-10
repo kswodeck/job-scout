@@ -36,6 +36,19 @@ If a night's run hits your subscription limit or a call fails, unscored jobs are
 5. First run: Actions → Job Scout → **Run workflow** (optionally set lookback, e.g. `14`). Watch the log.
 6. Done. It runs nightly at ~6:30am Central and opens an issue only on days with matches. Star-⭐ flags mark Vue/Nuxt/EdTech/faith-keyword hits.
 
+## Google integration (tracker rows + tailored materials) — one-time setup
+
+Two optional nightly stages use one Google service account: **tracker append** (every 60+ match becomes a `Radar` row in the Job Application Tracker sheet) and **materials** (a DRAFT tailored resume + cover letter DOCX per 60+ match, uploaded to the "Tailored Resumes and Cover Letters" Drive folder for review). Both are enabled in config but self-skip with a log line until this setup exists. GitHub Actions has no Google login, so a service account is the bridge:
+
+1. **Create the service account:** [console.cloud.google.com](https://console.cloud.google.com) → create (or pick) a project → *APIs & Services → Library* → enable **Google Drive API** and **Google Sheets API** → *IAM & Admin → Service Accounts → Create* (no roles needed) → open it → *Keys → Add key → Create new key → JSON* (downloads a `.json` file).
+2. **Set the secret:** `gh secret set GOOGLE_SERVICE_ACCOUNT_JSON < ~/Downloads/<key>.json` (or GitHub UI → Settings → Secrets and variables → Actions → paste the file's contents). Treat the key file like a password; delete the local copy after.
+3. **Convert the tracker to a native Google Sheet** — required: the tracker is currently an `.xlsx` and the Sheets API cannot write to xlsx. Open it in Google Sheets → *File → Save as Google Sheets*. This creates a NEW spreadsheet (new ID); use it as the live tracker from now on and archive the xlsx (a stale copy invites split-brain edits). Copy the new ID from its URL (`/spreadsheets/d/<ID>/`) into `tracker.spreadsheet_id` in `data/config.json`.
+4. **Share both with the service account:** the folder `Tailored Resumes and Cover Letters` and the new tracker Sheet → Share → the SA's `client_email` (`...@...iam.gserviceaccount.com`) as **Editor**.
+5. **Fix link sharing (security):** both the tracker and the folder are currently **"anyone with the link can edit"** — the tracker holds recruiter contacts and notes, so set both to **Restricted** (the explicit SA share from step 4 is what the automation actually uses).
+6. **Verify:** Actions → Job Scout → Run workflow. The log should show `Tracker: appended N row(s)…` and `Materials: N/M drafts uploaded…` on a night with 60+ matches. New tracker rows arrive as Status `Radar`, Priority High (70+) / Medium, score in Notes + Rank — same shape as manual entries.
+
+`data/applied.json` (the already-applied dedup snapshot) is still refreshed manually from a tracker CSV via `scripts/build-applied.js` — refresh it occasionally, or ask a Drive-connected Claude session to. Auto-refreshing it nightly from the live Sheet is a natural follow-up once the SA works.
+
 ### Local testing
 
 ```bash
@@ -54,7 +67,7 @@ Hard caps in config (`max_llm_screens_per_run`, `max_scores_per_run`) bound the 
 
 ## Files
 
-- `src/scout.js` — orchestrator. `sources.js` — fetchers (endpoints live-verified 2026-07-08; EdTech.com + Christian Tech Jobs 2026-07-10). `prefilter.js` — free keyword/location/salary gate. `rubric.js` — the scoring prompts (**keep in sync with the Chrome extension rubric if it evolves**). `llm.js` — API client. `digest.js`, `state.js`.
+- `src/scout.js` — orchestrator. `sources.js` — fetchers (endpoints live-verified 2026-07-08; EdTech.com + Christian Tech Jobs 2026-07-10). `prefilter.js` — free keyword/location/salary gate. `tracker.js` — 60+ matches → tracker Sheet rows. `materials.js` + `drive.js` + `materials/` — tailored DOCX drafts → Drive. `applied.js` — already-applied dedup. `rubric.js` — the scoring prompts (**keep in sync with the Chrome extension rubric if it evolves**). `llm.js` — API client. `digest.js`, `state.js`.
 - `data/config.json` — thresholds, sources on/off, models, star keywords.
 - `data/seen.json` — processed IDs (pruned after 120 days; delete it to force a full rescan, e.g. after loosening the prefilter).
 - `data/matches.json` + `data/matches.md` — the running "good fits" log, every match ever surfaced.

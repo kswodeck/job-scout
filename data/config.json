@@ -28,9 +28,15 @@
   "max_watchlist": 150,
   "star_keywords": ["vue", "nuxt", "edtech", "christian", "faith-based", "ministry"],
   "materials": {
-    "enabled": false,
+    "enabled": true,
     "min_score": 60,
     "max_per_run": 8,
     "drive_folder_id": "1OgX1wT3GD90bqPFybrJ7w9djc8ji1-QX"
+  },
+  "tracker": {
+    "enabled": true,
+    "min_score": 60,
+    "spreadsheet_id": "",
+    "sheet_name": "Applications"
   }
 }
