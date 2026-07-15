@@ -4,6 +4,7 @@ Every posting the scout surfaced at score >= min_score — newest first. Full de
 
 | Date | Score | Company | Title | Salary | Location | Via |
 |---|---|---|---|---|---|---|
+| 2026-07-15 | 65 | Marketron | [3+ YOE required Marketron builds advertising software in Nod…](https://news.ycombinator.com/item?id=48909598) | $70k - $90k listed | Remote (US) | HN Who's Hiring |
 | 2026-07-09 | 58 | Matcha | [REMOTE (US / Canada / Europe / UK / LATAM)](https://news.ycombinator.com/item?id=48757845) | Not listed | Remote (US/Canada/Europe/UK/LA… | HN Who's Hiring |
 | 2026-07-09 | 60 | Grafana Labs | [Senior Software Engineer - Observability Real User Monitorin…](https://job-boards.greenhouse.io/grafanalabs/jobs/5979012004) | Not listed | United States (Remote) | Greenhouse (grafanalabs) |
 | 2026-07-09 | 61 | WME (William Morris Endeavor) | [Full Time WME is a leading global talent and entertainment a…](https://news.ycombinator.com/item?id=48754223) | Senior SWE: $150,000-$200,000 … | Remote | HN Who's Hiring |
