@@ -1026,5 +1026,85 @@
   "family": "marketron::yoe required marketron builds advertising software in nodejs and react details available at the link below",
   "stars": [],
   "scoutedAt": "2026-07-15"
+ },
+ {
+  "score": 85,
+  "verdict": "Strong match",
+  "strengths": [
+   "Pure front-end design systems role (React, HTML/CSS/JS) matching his target roles",
+   "AI/LLM tooling focus is a direct bonus per his profile",
+   "5+ yr requirement aligns well with his 7+ yrs"
+  ],
+  "red_flags": [
+   "Posting text cuts off mid-requirement ('Hands-on experience integrating or building wit…') — can't confirm what AI-integration skill is actually required",
+   "Occasional on-call"
+  ],
+  "deductions": [],
+  "tailoring_tips": [
+   "Lead with MIND Education platform work as core front-end/customer-facing proof",
+   "Given the AI-native tooling angle, bring up the CalcCrunch autonomous AI pipeline as the single most relevant AI-adjacent proof point",
+   "Emphasize TypeScript and component-architecture experience for the design-system angle"
+  ],
+  "ats_keywords": [
+   "React",
+   "TypeScript",
+   "JavaScript",
+   "component-driven development",
+   "design systems",
+   "front-end architecture",
+   "accessibility/WCAG",
+   "AI-assisted tooling"
+  ],
+  "salary_out": "Not listed",
+  "location_out": "Remote - Anywhere in the World (HQ listed as Remote - Mexico, but role itself unrestricted)",
+  "id": "wwr:https://weworkremotely.com/remote-jobs/dropbox-frontend-product-software-engineer-design-systems",
+  "company": "Dropbox",
+  "title": "Frontend Product Software Engineer, Design Systems",
+  "url": "https://weworkremotely.com/remote-jobs/dropbox-frontend-product-software-engineer-design-systems",
+  "via": "WeWorkRemotely",
+  "family": "dropbox::frontend product software engineer design systems",
+  "stars": [],
+  "scoutedAt": "2026-07-22"
+ },
+ {
+  "score": 85,
+  "verdict": "Strong match",
+  "strengths": [
+   "Stack is a near-exact match: React, TypeScript, Playwright, Vitest",
+   "Strong front-end product role (Twilio Console) with clear IC scope",
+   "REST/GraphQL requirement matches his API integration background"
+  ],
+  "red_flags": [
+   "Required experience listed as only '2+ years' — role may skew more mid-level than his 7+ yrs suggests, worth confirming seniority in interview",
+   "On-call/incident response is a real responsibility, not just occasional"
+  ],
+  "deductions": [
+   "AWS (or other cloud) listed under Desired, and hands-on AWS is a genuine gap (-1)"
+  ],
+  "tailoring_tips": [
+   "Lead with MIND Education platform experience as the customer-facing front-end proof point",
+   "Highlight Vitest/Playwright/Mocha-Chai testing background directly against their stated tooling (Playwright, Vitest)",
+   "Emphasize REST API integration experience for the 'REST APIs or GraphQL' requirement"
+  ],
+  "ats_keywords": [
+   "React",
+   "TypeScript",
+   "Playwright",
+   "Vitest",
+   "REST APIs",
+   "CI/CD",
+   "Agile/SCRUM",
+   "production troubleshooting"
+  ],
+  "salary_out": "Not listed",
+  "location_out": "Remote - Anywhere in the World (HQ listed as Remote - United Kingdom, but role itself unrestricted)",
+  "id": "wwr:https://weworkremotely.com/remote-jobs/twilio-frontend-software-engineer",
+  "company": "Twilio",
+  "title": "Frontend Software Engineer",
+  "url": "https://weworkremotely.com/remote-jobs/twilio-frontend-software-engineer",
+  "via": "WeWorkRemotely",
+  "family": "twilio::frontend software engineer",
+  "stars": [],
+  "scoutedAt": "2026-07-22"
  }
 ]

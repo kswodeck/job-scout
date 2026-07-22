@@ -4,6 +4,8 @@ Every posting the scout surfaced at score >= min_score — newest first. Full de
 
 | Date | Score | Company | Title | Salary | Location | Via |
 |---|---|---|---|---|---|---|
+| 2026-07-22 | 85 | Twilio | [Frontend Software Engineer](https://weworkremotely.com/remote-jobs/twilio-frontend-software-engineer) | Not listed | Remote - Anywhere in the World… | WeWorkRemotely |
+| 2026-07-22 | 85 | Dropbox | [Frontend Product Software Engineer, Design Systems](https://weworkremotely.com/remote-jobs/dropbox-frontend-product-software-engineer-design-systems) | Not listed | Remote - Anywhere in the World… | WeWorkRemotely |
 | 2026-07-15 | 65 | Marketron | [3+ YOE required Marketron builds advertising software in Nod…](https://news.ycombinator.com/item?id=48909598) | $70k - $90k listed | Remote (US) | HN Who's Hiring |
 | 2026-07-09 | 58 | Matcha | [REMOTE (US / Canada / Europe / UK / LATAM)](https://news.ycombinator.com/item?id=48757845) | Not listed | Remote (US/Canada/Europe/UK/LA… | HN Who's Hiring |
 | 2026-07-09 | 60 | Grafana Labs | [Senior Software Engineer - Observability Real User Monitorin…](https://job-boards.greenhouse.io/grafanalabs/jobs/5979012004) | Not listed | United States (Remote) | Greenhouse (grafanalabs) |
