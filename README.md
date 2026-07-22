@@ -1,6 +1,6 @@
 # Job Scout
 
-Nightly broad-discovery job agent. Sweeps public job feeds, filters and scores every new posting against my rubric (the same one my Chrome extension uses), and opens a GitHub Issue digest each morning with only the jobs worth my time. GitHub emails the issue to me automatically — no SMTP setup needed.
+Every-other-day broad-discovery job agent. Sweeps public job feeds, filters and scores every new posting against my rubric (the same one my Chrome extension uses), and opens a GitHub Issue digest each morning with only the jobs worth my time. GitHub emails the issue to me automatically — no SMTP setup needed.
 
 **Pipeline:** fetch (free feeds) → local keyword prefilter (free) → Haiku screen → Sonnet full-rubric scorecard → digest issue + running match log. Screening and scoring are batched (many jobs per prompt).
 
@@ -34,7 +34,7 @@ If a night's run hits your subscription limit or a call fails, unscored jobs are
 3. Repo → Settings → Secrets and variables → Actions → New repository secret: `CLAUDE_CODE_OAUTH_TOKEN` with that value. *(API mode instead: secret `ANTHROPIC_API_KEY` and set `llm.transport` to `"api"`.)*
 4. Actions tab → enable workflows if prompted.
 5. First run: Actions → Job Scout → **Run workflow** (optionally set lookback, e.g. `14`). Watch the log.
-6. Done. It runs nightly at 4:00am Central (3:00am in winter; GitHub cron often adds 1–2h of lag) and opens a digest issue each morning. Star-⭐ flags mark Vue/Nuxt/EdTech/faith-keyword hits.
+6. Done. It runs every other day (odd days of the month) at 4:00am Central (3:00am in winter; GitHub cron often adds 1–2h of lag) and opens a digest issue each run morning. Star-⭐ flags mark Vue/Nuxt/EdTech/faith-keyword hits.
 
 ## Google integration (tracker rows + tailored materials) — one-time setup
 
