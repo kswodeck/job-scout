@@ -1106,5 +1106,45 @@
   "family": "twilio::frontend software engineer",
   "stars": [],
   "scoutedAt": "2026-07-22"
+ },
+ {
+  "score": 86,
+  "verdict": "Strong match",
+  "strengths": [
+   "Pure front-end ownership of consumer payment flows (React/React Native)",
+   "Senior IC role with mentoring, not staff/principal",
+   "Salary well above floor, near top of listed-salary ceiling scale"
+  ],
+  "red_flags": [
+   "Quarterly in-person 'surges' — some travel despite remote-first framing",
+   "High-intensity/'push past your limits' culture language",
+   "Crypto/fintech domain, no EdTech or Vue/Nuxt overlap"
+  ],
+  "deductions": [],
+  "tailoring_tips": [
+   "Lead with MIND Education platform work — customer-facing, performance-sensitive front-end at scale maps directly to their CUJ latency/reliability focus",
+   "Bring up FantasyFire as your clearest React proof point since this role wants deep React/React Native expertise",
+   "Emphasize any prior mentoring or code-review leadership to match their 'senior technical voice' ask"
+  ],
+  "ats_keywords": [
+   "React",
+   "React Native",
+   "frontend development",
+   "consumer-facing",
+   "performance",
+   "latency",
+   "reliability",
+   "mentoring junior engineers"
+  ],
+  "salary_out": "$186,065–$218,900 USD base (listed)",
+  "location_out": "Remote - USA (quarterly in-person 'surges', travel implied)",
+  "id": "wwr:https://weworkremotely.com/remote-jobs/coinbase-senior-software-engineer-frontend-consumer-payments",
+  "company": "Coinbase",
+  "title": "Senior Software Engineer, Frontend (Consumer - Payments)",
+  "url": "https://weworkremotely.com/remote-jobs/coinbase-senior-software-engineer-frontend-consumer-payments",
+  "via": "WeWorkRemotely",
+  "family": "coinbase::software engineer frontend consumer payments",
+  "stars": [],
+  "scoutedAt": "2026-07-23"
  }
 ]

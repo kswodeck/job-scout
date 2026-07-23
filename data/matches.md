@@ -4,6 +4,7 @@ Every posting the scout surfaced at score >= min_score — newest first. Full de
 
 | Date | Score | Company | Title | Salary | Location | Via |
 |---|---|---|---|---|---|---|
+| 2026-07-23 | 86 | Coinbase | [Senior Software Engineer, Frontend (Consumer - Payments)](https://weworkremotely.com/remote-jobs/coinbase-senior-software-engineer-frontend-consumer-payments) | $186,065–$218,900 USD base (li… | Remote - USA (quarterly in-per… | WeWorkRemotely |
 | 2026-07-22 | 85 | Twilio | [Frontend Software Engineer](https://weworkremotely.com/remote-jobs/twilio-frontend-software-engineer) | Not listed | Remote - Anywhere in the World… | WeWorkRemotely |
 | 2026-07-22 | 85 | Dropbox | [Frontend Product Software Engineer, Design Systems](https://weworkremotely.com/remote-jobs/dropbox-frontend-product-software-engineer-design-systems) | Not listed | Remote - Anywhere in the World… | WeWorkRemotely |
 | 2026-07-15 | 65 | Marketron | [3+ YOE required Marketron builds advertising software in Nod…](https://news.ycombinator.com/item?id=48909598) | $70k - $90k listed | Remote (US) | HN Who's Hiring |
