@@ -262,5 +262,125 @@
   "token": "wirescreen",
   "via": "auto-discovered",
   "first_seen": "2026-07-09"
+ },
+ {
+  "ats": "greenhouse",
+  "token": "brightcoreenergy",
+  "via": "auto-discovered",
+  "first_seen": "2026-08-05"
+ },
+ {
+  "ats": "greenhouse",
+  "token": "canopyworks",
+  "via": "auto-discovered",
+  "first_seen": "2026-08-05"
+ },
+ {
+  "ats": "greenhouse",
+  "token": "ionq",
+  "via": "auto-discovered",
+  "first_seen": "2026-08-05"
+ },
+ {
+  "ats": "greenhouse",
+  "token": "baton",
+  "via": "auto-discovered",
+  "first_seen": "2026-08-05"
+ },
+ {
+  "ats": "lever",
+  "token": "atomcomputing",
+  "via": "auto-discovered",
+  "first_seen": "2026-08-05"
+ },
+ {
+  "ats": "lever",
+  "token": "gausslabs",
+  "via": "auto-discovered",
+  "first_seen": "2026-08-05"
+ },
+ {
+  "ats": "lever",
+  "token": "eleostech",
+  "via": "auto-discovered",
+  "first_seen": "2026-08-05"
+ },
+ {
+  "ats": "ashby",
+  "token": "maincode",
+  "via": "auto-discovered",
+  "first_seen": "2026-08-05"
+ },
+ {
+  "ats": "ashby",
+  "token": "forus",
+  "via": "auto-discovered",
+  "first_seen": "2026-08-05"
+ },
+ {
+  "ats": "ashby",
+  "token": "nango",
+  "via": "auto-discovered",
+  "first_seen": "2026-08-05"
+ },
+ {
+  "ats": "ashby",
+  "token": "deepsetai",
+  "via": "auto-discovered",
+  "first_seen": "2026-08-05"
+ },
+ {
+  "ats": "ashby",
+  "token": "proxima-fusion",
+  "via": "auto-discovered",
+  "first_seen": "2026-08-05"
+ },
+ {
+  "ats": "ashby",
+  "token": "prior-labs",
+  "via": "auto-discovered",
+  "first_seen": "2026-08-05"
+ },
+ {
+  "ats": "ashby",
+  "token": "voltai.careers",
+  "via": "auto-discovered",
+  "first_seen": "2026-08-05"
+ },
+ {
+  "ats": "ashby",
+  "token": "aptura",
+  "via": "auto-discovered",
+  "first_seen": "2026-08-05"
+ },
+ {
+  "ats": "ashby",
+  "token": "charge-robotics",
+  "via": "auto-discovered",
+  "first_seen": "2026-08-05"
+ },
+ {
+  "ats": "ashby",
+  "token": "sentilink",
+  "via": "auto-discovered",
+  "first_seen": "2026-08-05"
+ },
+ {
+  "ats": "ashby",
+  "token": "tonicai",
+  "via": "auto-discovered",
+  "first_seen": "2026-08-05"
+ },
+ {
+  "ats": "ashby",
+  "token": "everis",
+  "via": "auto-discovered",
+  "first_seen": "2026-08-05"
+ },
+ {
+  "ats": "ashby",
+  "token": "checkly",
+  "via": "auto-discovered",
+  "first_seen": "2026-08-05"
  }
 ]

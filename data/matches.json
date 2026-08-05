@@ -1146,5 +1146,78 @@
   "family": "coinbase::software engineer frontend consumer payments",
   "stars": [],
   "scoutedAt": "2026-07-23"
+ },
+ {
+  "score": 76,
+  "verdict": "Strong match",
+  "strengths": [
+   "Frontend Engineer role is ~80% React/Tailwind front-end, ~20% Node/PostgreSQL backend — front-end-majority, close match to profile",
+   "Stack directly matches: React, Node.js, PostgreSQL, Tailwind, heavy JS+TS use",
+   "Remote US eligible"
+  ],
+  "red_flags": [
+   "20% backend involvement means a modest deduction vs. a pure front-end role",
+   "Posting mentions hiring senior AND staff level — confirm the Frontend Engineer opening isn't staff-only before applying"
+  ],
+  "deductions": [
+   "Mostly-front-end-with-some-backend scoring adjustment per rubric (not a hard cap, small holistic reduction)"
+  ],
+  "tailoring_tips": [
+   "Lead with MIND Education front-end platform work; this role's 80/20 split mirrors that kind of front-end-primary ownership",
+   "Mention FantasyFire for the React/Node/PostgreSQL overlap — it's directly transferable proof, not just portfolio-level",
+   "Tailwind and PostgreSQL-via-Prisma experience are both honestly claimable here"
+  ],
+  "ats_keywords": [
+   "React",
+   "Node.js",
+   "PostgreSQL",
+   "Tailwind",
+   "TypeScript",
+   "JavaScript",
+   "Remote (US)"
+  ],
+  "salary_out": "Not listed",
+  "location_out": "Remote (US or Ontario, Canada) — US remote qualifies",
+  "id": "hn:49156689",
+  "company": "Snout https://snout.com/",
+  "title": "Multiple Engineering + Product Roles",
+  "url": "https://news.ycombinator.com/item?id=49156689",
+  "via": "HN Who's Hiring",
+  "family": "snout https://snout.com/::multiple engineering product roles",
+  "stars": [],
+  "scoutedAt": "2026-08-05"
+ },
+ {
+  "score": 63,
+  "verdict": "Worth applying",
+  "strengths": [
+   "Strong EdTech/K-12 domain match (MIND Education background directly relevant)",
+   "Remote US, salary well above the $80k floor",
+   "Established, reputable EdTech company (K-12 literacy/math/science curriculum)"
+  ],
+  "red_flags": [
+   "Posting is a company-wide role roster with no actual job description, stack, or requirements for the Software Engineer / Senior Software Engineer listings — scored conservatively since front-end fit can't be verified from this text",
+   "Unclear if either engineering role is front-end-leaning or full-stack/backend"
+  ],
+  "deductions": [],
+  "tailoring_tips": [
+   "Worth pursuing the full listing at amplify.com/careers to find the specific front-end-leaning req before tailoring materials",
+   "Lead with MIND Education K-12 platform experience — direct domain overlap"
+  ],
+  "ats_keywords": [
+   "K-12",
+   "EdTech",
+   "Remote (US)"
+  ],
+  "salary_out": "Software Engineer: $120K–$129K + bonus; Senior Software Engineer: $140K–$160K + bonus (role-specific ranges, both above floor)",
+  "location_out": "Remote (US)",
+  "id": "hn:49162914",
+  "company": "Amplify Education",
+  "title": "https://amplify.com/careers/ We’re looking for innovators and optimists to join us in developing next-generati",
+  "url": "https://news.ycombinator.com/item?id=49162914",
+  "via": "HN Who's Hiring",
+  "family": "amplify education::https amplify com careers we re looking for innovators and optimists to join us in developing next generati",
+  "stars": [],
+  "scoutedAt": "2026-08-05"
  }
 ]
