@@ -1219,5 +1219,44 @@
   "family": "amplify education::https amplify com careers we re looking for innovators and optimists to join us in developing next generati",
   "stars": [],
   "scoutedAt": "2026-08-05"
+ },
+ {
+  "score": 80,
+  "verdict": "Strong match",
+  "strengths": [
+   "Senior React + TypeScript role, front-end-owned (Rails devs handle backend, he only integrates via REST)",
+   "Strong testing culture (Cypress, Storybook) matches his shift-left background",
+   "Low-meeting, async-friendly remote culture that explicitly encourages thoughtful AI-tool use"
+  ],
+  "red_flags": [
+   "Location is 'ideally USA' but not required — some risk role could go to a non-US hire",
+   "No salary listed"
+  ],
+  "deductions": [],
+  "tailoring_tips": [
+   "Lead with MIND Education front-end ownership experience — this role wants someone who owns features end-to-end",
+   "Bring up FantasyFire as proof of real production React/Next.js work, not just portfolio-level",
+   "Highlight Cypress/Selenium testing background against their 'improve front-end testing practices' ask"
+  ],
+  "ats_keywords": [
+   "React",
+   "TypeScript",
+   "RESTful APIs",
+   "Cypress",
+   "Storybook",
+   "component design",
+   "state management",
+   "front-end architecture"
+  ],
+  "salary_out": "Not listed",
+  "location_out": "Remote — Western Hemisphere, ideally USA (also open to Canada/LatAm)",
+  "id": "wwr:https://weworkremotely.com/remote-jobs/memberspace-senior-react-developer",
+  "company": "MemberSpace",
+  "title": "Senior React Developer",
+  "url": "https://weworkremotely.com/remote-jobs/memberspace-senior-react-developer",
+  "via": "WeWorkRemotely",
+  "family": "memberspace::react developer",
+  "stars": [],
+  "scoutedAt": "2026-08-07"
  }
 ]

@@ -382,5 +382,11 @@
   "token": "checkly",
   "via": "auto-discovered",
   "first_seen": "2026-08-05"
+ },
+ {
+  "ats": "ashby",
+  "token": "turquoise-health",
+  "via": "auto-discovered",
+  "first_seen": "2026-08-07"
  }
 ]

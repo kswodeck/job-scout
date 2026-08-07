@@ -4,6 +4,7 @@ Every posting the scout surfaced at score >= min_score — newest first. Full de
 
 | Date | Score | Company | Title | Salary | Location | Via |
 |---|---|---|---|---|---|---|
+| 2026-08-07 | 80 | MemberSpace | [Senior React Developer](https://weworkremotely.com/remote-jobs/memberspace-senior-react-developer) | Not listed | Remote — Western Hemisphere, i… | WeWorkRemotely |
 | 2026-08-05 | 63 | Amplify Education | [https://amplify.com/careers/ We’re looking for innovators an…](https://news.ycombinator.com/item?id=49162914) | Software Engineer: $120K–$129K… | Remote (US) | HN Who's Hiring |
 | 2026-08-05 | 76 | Snout https://snout.com/ | [Multiple Engineering + Product Roles](https://news.ycombinator.com/item?id=49156689) | Not listed | Remote (US or Ontario, Canada)… | HN Who's Hiring |
 | 2026-07-23 | 86 | Coinbase | [Senior Software Engineer, Frontend (Consumer - Payments)](https://weworkremotely.com/remote-jobs/coinbase-senior-software-engineer-frontend-consumer-payments) | $186,065–$218,900 USD base (li… | Remote - USA (quarterly in-per… | WeWorkRemotely |
