@@ -44,6 +44,14 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           # Autonomous draft materials -> Google Drive (only when materials.enabled).
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+          # Kept out of the repo because it is public: Google resource IDs act as
+          # capabilities for anything shared "anyone with the link", and resume
+          # contact details get harvested by scrapers. Unset = those stages skip
+          # (tracker/materials) or omit the line (contact).
+          TRACKER_SPREADSHEET_ID: ${{ secrets.TRACKER_SPREADSHEET_ID }}
+          MATERIALS_DRIVE_FOLDER_ID: ${{ secrets.MATERIALS_DRIVE_FOLDER_ID }}
+          RESUME_PHONE: ${{ secrets.RESUME_PHONE }}
+          RESUME_EMAIL: ${{ secrets.RESUME_EMAIL }}
           LOOKBACK_DAYS: ${{ inputs.lookback_days }}
         run: node src/scout.js
 

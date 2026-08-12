@@ -3,15 +3,24 @@
 // The generator may ONLY reorder/select skills from here and rephrase THESE bullets
 // — never invent experience. This file is the anti-fabrication anchor.
 
+const RESUME_PHONE = process.env.RESUME_PHONE || "";
+const RESUME_EMAIL = process.env.RESUME_EMAIL || "";
+
 const MASTER = {
   name: "Kris Swodeck",
   title: "Front-End Web Developer / Software Engineer",
   tagline: "JavaScript  •  TypeScript  •  Front-End Development & Engineering  •  Responsive, Accessible Web Apps",
   summary: "Front-End Web Developer / Software Engineer with 7+ years building and testing performant, accessible production web applications across the full software development lifecycle. Specialized in JavaScript, TypeScript, HTML5, CSS3, and the Vue / Nuxt.js ecosystem, with a solid Node.js foundation. Combines hands-on development with a quality-driven engineering mindset and daily AI-assisted development workflows to ship reliable, well-tested, maintainable code. A Business Administration background adds a product mindset — weighing user, customer, and business impact to ensure each feature solves the right problem. B.S. in Computer Science with a Business Administration minor.",
+  // Contact details are NOT stored in this repo — it is public, and a committed
+  // phone number/email gets harvested by scrapers. They come from the
+  // RESUME_PHONE / RESUME_EMAIL env vars (GitHub Actions secrets in CI, a local
+  // shell export when running by hand). Unset = the generated DOCX simply omits
+  // that line, so a draft built without them is visibly incomplete rather than
+  // wrong. The public profile links stay in the clear: they are already public.
   contact: {
     location: "Dallas–Fort Worth, TX",
-    phone: "(909) 631-3783", phoneUrl: "tel:+19096313783",
-    email: "kmswodeck@gmail.com", emailUrl: "mailto:kmswodeck@gmail.com",
+    phone: RESUME_PHONE, phoneUrl: RESUME_PHONE ? `tel:+1${RESUME_PHONE.replace(/\D/g, "")}` : "",
+    email: RESUME_EMAIL, emailUrl: RESUME_EMAIL ? `mailto:${RESUME_EMAIL}` : "",
     linkedin: "linkedin.com/in/kristoffer-swodeck", linkedinUrl: "https://linkedin.com/in/kristoffer-swodeck",
     github: "github.com/kswodeck", githubUrl: "https://github.com/kswodeck",
     site: "kswodeck.swodecksitesolutions.com", siteUrl: "https://kswodeck.swodecksitesolutions.com",

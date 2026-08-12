@@ -79,7 +79,13 @@ function buildResume(cfg, outDir) {
   children.push(new Paragraph({ alignment: AlignmentType.CENTER, spacing: { after: 20 }, children: [new TextRun({ text: data.name, bold: true, size: 40, font: "Arial" })] }));
   children.push(new Paragraph({ alignment: AlignmentType.CENTER, spacing: { after: 10 }, children: [new TextRun({ text: data.title, size: 23, color: ACCENT, font: "Arial" })] }));
   children.push(new Paragraph({ alignment: AlignmentType.CENTER, spacing: { after: 60 }, children: [new TextRun({ text: data.tagline, size: 18, color: "595959", font: "Arial" })] }));
-  children.push(new Paragraph({ alignment: AlignmentType.CENTER, spacing: { after: 10 }, children: [new TextRun({ text: c.location, size: 18, font: "Arial" }), sep(), link(c.phone, c.phoneUrl), sep(), link(c.email, c.emailUrl)] }));
+  // Phone/email come from env (see materials/master.js) and may be absent in a
+  // public-repo checkout — join only the parts that exist so the line never
+  // renders orphaned separators.
+  const line1 = [new TextRun({ text: c.location, size: 18, font: "Arial" })];
+  if (c.phone) line1.push(sep(), link(c.phone, c.phoneUrl));
+  if (c.email) line1.push(sep(), link(c.email, c.emailUrl));
+  children.push(new Paragraph({ alignment: AlignmentType.CENTER, spacing: { after: 10 }, children: line1 }));
   children.push(new Paragraph({ alignment: AlignmentType.CENTER, spacing: { after: 40 }, children: [link(c.linkedin, c.linkedinUrl), sep(), link(c.github, c.githubUrl), sep(), link(c.site, c.siteUrl)] }));
   children.push(sectionHeader("Professional Summary"));
   children.push(new Paragraph({ spacing: { after: 0 }, children: [new TextRun({ size: 20, font: "Arial", text: data.summary })] }));
@@ -125,7 +131,13 @@ function buildCoverLetter(cfg, outDir) {
   const children = [
     cline("Kris Swodeck", { size: 32, bold: true, after: 40 }),
     cline("Software Engineer / Front-End Web Developer", { after: 40 }),
-    new Paragraph({ spacing: { after: 40 }, children: [plainRun(c.location + " | "), clink(c.phone, c.phoneUrl), plainRun(" | "), clink(c.email, c.emailUrl)] }),
+    new Paragraph({ spacing: { after: 40 }, children: (() => {
+      // Same env-sourced contact handling as the resume header.
+      const r = [plainRun(c.location)];
+      if (c.phone) r.push(plainRun(" | "), clink(c.phone, c.phoneUrl));
+      if (c.email) r.push(plainRun(" | "), clink(c.email, c.emailUrl));
+      return r;
+    })() }),
     new Paragraph({ spacing: { after: 240 }, children: [clink(c.linkedin, c.linkedinUrl), plainRun(" | "), clink(c.github, c.githubUrl), plainRun(" | "), clink(c.site, c.siteUrl)] }),
     cline(cfg.date, { after: 240 }),
     cline(cfg.company, { after: 40 }),

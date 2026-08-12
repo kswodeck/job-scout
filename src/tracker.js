@@ -54,7 +54,11 @@ function buildRow(m) {
 }
 
 async function appendToTracker(matches, cfg) {
-  const t = cfg.tracker || {};
+  // The sheet ID is env-first: this repo is public, and a Google resource ID is
+  // a capability for anything shared "anyone with the link". Config remains a
+  // fallback for private forks.
+  const t = { ...(cfg.tracker || {}) };
+  t.spreadsheet_id = process.env.TRACKER_SPREADSHEET_ID || t.spreadsheet_id;
   const rows = matches.filter(m => m.score >= (t.min_score || 60)).map(buildRow);
   if (!rows.length) { console.log("Tracker: no matches at/above the bar."); return; }
   const sa = loadServiceAccount();
