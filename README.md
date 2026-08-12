@@ -36,16 +36,28 @@ If a night's run hits your subscription limit or a call fails, unscored jobs are
 5. First run: Actions → Job Scout → **Run workflow** (optionally set lookback, e.g. `14`). Watch the log.
 6. Done. It runs every other day (odd days of the month) at 4:00am Central (3:00am in winter; GitHub cron often adds 1–2h of lag) and opens a digest issue each run morning. Star-⭐ flags mark Vue/Nuxt/EdTech/faith-keyword hits.
 
+## Private state repo (required — this repo is public)
+
+The code here is public; the *search* is not. Three files describe where Kris has actually applied and how the rubric read his live targets — `data/applied.json`, `data/matches.json`, `data/matches.md` — so they are gitignored and live in a separate **private** repo. The workflow clones it before the run and pushes it back after, and the nightly digest issue is opened **there**, not here.
+
+1. Create a private repo, e.g. `kswodeck/job-scout-state`, with one initial commit (a README is enough).
+2. Copy your current `data/applied.json`, `data/matches.json`, and `data/matches.md` into its root and push. (They are still in your local working tree — untracked here, not deleted.)
+3. Create a fine-grained PAT scoped to **only** that repo, with **Contents: Read and write** + **Issues: Read and write**.
+4. Set two secrets on *this* repo: `STATE_REPO` = `kswodeck/job-scout-state`, and `STATE_TOKEN` = that PAT.
+
+If either secret is missing the scout still runs, but it starts with no match history (duplicate suppression off for that run) and **opens no issue at all** — deliberately fail-safe, since the only place it could post here is public. The Actions log prints a warning in that case.
+
 ## Google integration (tracker rows + tailored materials) — one-time setup
 
 Two optional nightly stages use one Google service account: **tracker append** (every 60+ match becomes a `Radar` row in the Job Application Tracker sheet) and **materials** (a DRAFT tailored resume + cover letter DOCX per 60+ match, uploaded to the "Tailored Resumes and Cover Letters" Drive folder for review). Both are enabled in config but self-skip with a log line until this setup exists. GitHub Actions has no Google login, so a service account is the bridge:
 
 1. **Create the service account:** [console.cloud.google.com](https://console.cloud.google.com) → create (or pick) a project → *APIs & Services → Library* → enable **Google Drive API** and **Google Sheets API** → *IAM & Admin → Service Accounts → Create* (no roles needed) → open it → *Keys → Add key → Create new key → JSON* (downloads a `.json` file).
 2. **Set the secret:** `gh secret set GOOGLE_SERVICE_ACCOUNT_JSON < ~/Downloads/<key>.json` (or GitHub UI → Settings → Secrets and variables → Actions → paste the file's contents). Treat the key file like a password; delete the local copy after.
-3. **Convert the tracker to a native Google Sheet** — required: the tracker is currently an `.xlsx` and the Sheets API cannot write to xlsx. Open it in Google Sheets → *File → Save as Google Sheets*. This creates a NEW spreadsheet (new ID); use it as the live tracker from now on and archive the xlsx (a stale copy invites split-brain edits). Copy the new ID from its URL (`/spreadsheets/d/<ID>/`) into `tracker.spreadsheet_id` in `data/config.json`.
-4. **Share both with the service account:** the folder `Tailored Resumes and Cover Letters` and the new tracker Sheet → Share → the SA's `client_email` (`...@...iam.gserviceaccount.com`) as **Editor**.
-5. **Fix link sharing (security):** both the tracker and the folder are currently **"anyone with the link can edit"** — the tracker holds recruiter contacts and notes, so set both to **Restricted** (the explicit SA share from step 4 is what the automation actually uses).
-6. **Verify:** Actions → Job Scout → Run workflow. The log should show `Tracker: appended N row(s)…` and `Materials: N/M drafts uploaded…` on a night with 60+ matches. New tracker rows arrive as Status `Radar`, Priority High (70+) / Medium, score in Notes + Rank — same shape as manual entries.
+3. **Convert the tracker to a native Google Sheet** — required: the tracker is currently an `.xlsx` and the Sheets API cannot write to xlsx. Open it in Google Sheets → *File → Save as Google Sheets*. This creates a NEW spreadsheet (new ID); use it as the live tracker from now on and archive the xlsx (a stale copy invites split-brain edits). Copy the new ID from its URL (`/spreadsheets/d/<ID>/`) and set it as the **`TRACKER_SPREADSHEET_ID`** repo secret (`gh secret set TRACKER_SPREADSHEET_ID`) — **not** in `data/config.json`. This repo is public, and a Google resource ID is effectively a capability for anything shared "anyone with the link". The config key still works as a fallback for private forks, but leave it blank here.
+4. **Share both with the service account:** the folder `Tailored Resumes and Cover Letters` and the new tracker Sheet → Share → the SA's `client_email` (`...@...iam.gserviceaccount.com`) as **Editor**. Set the folder's ID (from its URL, `/folders/<ID>`) as the **`MATERIALS_DRIVE_FOLDER_ID`** secret, same reasoning as step 3.
+5. **Fix link sharing — do this first, it is the one that bites:** both the tracker and the folder were last seen set to **"anyone with the link can edit"**. Set both to **Restricted**; the explicit SA share from step 4 is what the automation actually uses. Link-open + a published ID means any reader can open and edit the sheet, so this must be true before the repo is public *or* the IDs go anywhere.
+6. **Resume contact details:** set the **`RESUME_PHONE`** and **`RESUME_EMAIL`** secrets. `materials/master.js` deliberately does not carry them (a committed phone number in a public repo gets scraped); without the secrets the generated DOCX simply omits that line.
+7. **Verify:** Actions → Job Scout → Run workflow. The log should show `Tracker: appended N row(s)…` and `Materials: N/M drafts uploaded…` on a night with 60+ matches. New tracker rows arrive as Status `Radar`, Priority High (70+) / Medium, score in Notes + Rank — same shape as manual entries.
 
 `data/applied.json` (the already-applied dedup snapshot) is still refreshed manually from a tracker CSV via `scripts/build-applied.js` — refresh it occasionally, or ask a Drive-connected Claude session to. Auto-refreshing it nightly from the live Sheet is a natural follow-up once the SA works.
 

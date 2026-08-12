@@ -114,7 +114,9 @@ async function generateConfig(match, text, dateStr, cfg) {
 }
 
 async function runMaterials(matches, textById, cfg) {
-  const m = cfg.materials || {};
+  // Env-first for the same reason as tracker.spreadsheet_id — see src/tracker.js.
+  const m = { ...(cfg.materials || {}) };
+  m.drive_folder_id = process.env.MATERIALS_DRIVE_FOLDER_ID || m.drive_folder_id;
   const sa = loadServiceAccount();
   const eligible = matches.filter(x => x.score >= (m.min_score || 60)).slice(0, m.max_per_run || 8);
   if (!eligible.length) { console.log("Materials: no matches at/above the bar."); return; }

@@ -2,6 +2,15 @@
 digest.md
 digest_title.txt
 
+# Private job-search state. This repo is public; these three describe where Kris
+# has applied and how the rubric scored his live targets. They live in the
+# private state repo instead (STATE_REPO secret) and are synced in/out by the
+# workflow. Missing = the pipeline still runs, it just loses duplicate
+# suppression, so a local checkout without them is safe but noisier.
+data/applied.json
+data/matches.json
+data/matches.md
+
 # Materials builder: installed in CI via `npm ci --prefix materials`
 materials/node_modules/
 materials/out/

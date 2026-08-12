@@ -30,12 +30,12 @@
     "enabled": true,
     "min_score": 60,
     "max_per_run": 8,
-    "drive_folder_id": "1OgX1wT3GD90bqPFybrJ7w9djc8ji1-QX"
+    "drive_folder_id": ""
   },
   "tracker": {
     "enabled": true,
     "min_score": 60,
-    "spreadsheet_id": "158F7G7x_xMZ2Mp9IMzDs7Jl-lKN1AU1jonUzDD1vu3M",
+    "spreadsheet_id": "",
     "sheet_name": "Applications"
   }
 }

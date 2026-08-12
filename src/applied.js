@@ -1,6 +1,6 @@
 // Suppress candidates that duplicate a role already in Kris's application tracker.
 //
-// data/applied.json is a committed snapshot of {company, title} pairs pulled from
+// data/applied.json is a snapshot of {company, title} pairs pulled from
 // the Company + Role/Title columns of his Google Sheet — nothing else (no salaries,
 // notes, or recruiter names). The nightly GitHub Actions run has no Google login,
 // so this file is the tracker's stand-in; refresh it on demand from a session that
