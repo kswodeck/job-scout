@@ -36,6 +36,17 @@ If a night's run hits your subscription limit or a call fails, unscored jobs are
 5. First run: Actions → Job Scout → **Run workflow** (optionally set lookback, e.g. `14`). Watch the log.
 6. Done. It runs every other day (odd days of the month) at 4:00am Central (3:00am in winter; GitHub cron often adds 1–2h of lag) and opens a digest issue each run morning. Star-⭐ flags mark Vue/Nuxt/EdTech/faith-keyword hits.
 
+## Private state repo (required — this repo is public)
+
+The code here is public; the *search* is not. Three files describe where Kris has actually applied and how the rubric read his live targets — `data/applied.json`, `data/matches.json`, `data/matches.md` — so they are gitignored and live in a separate **private** repo. The workflow clones it before the run and pushes it back after, and the nightly digest issue is opened **there**, not here.
+
+1. Create a private repo, e.g. `kswodeck/job-scout-state`, with one initial commit (a README is enough).
+2. Copy your current `data/applied.json`, `data/matches.json`, and `data/matches.md` into its root and push. (They are still in your local working tree — untracked here, not deleted.)
+3. Create a fine-grained PAT scoped to **only** that repo, with **Contents: Read and write** + **Issues: Read and write**.
+4. Set two secrets on *this* repo: `STATE_REPO` = `kswodeck/job-scout-state`, and `STATE_TOKEN` = that PAT.
+
+If either secret is missing the scout still runs, but it starts with no match history (duplicate suppression off for that run) and **opens no issue at all** — deliberately fail-safe, since the only place it could post here is public. The Actions log prints a warning in that case.
+
 ## Google integration (tracker rows + tailored materials) — one-time setup
 
 Two optional nightly stages use one Google service account: **tracker append** (every 60+ match becomes a `Radar` row in the Job Application Tracker sheet) and **materials** (a DRAFT tailored resume + cover letter DOCX per 60+ match, uploaded to the "Tailored Resumes and Cover Letters" Drive folder for review). Both are enabled in config but self-skip with a log line until this setup exists. GitHub Actions has no Google login, so a service account is the bridge:

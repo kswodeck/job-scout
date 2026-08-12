@@ -21,6 +21,14 @@ jobs:
   scout:
     runs-on: ubuntu-latest
     timeout-minutes: 25
+
+    # Hoisted to job level because the `secrets` context is NOT available in
+    # step-level `if:` conditions — `env` is, so the private-state steps gate on
+    # env.STATE_REPO instead.
+    env:
+      STATE_REPO: ${{ secrets.STATE_REPO }}
+      STATE_TOKEN: ${{ secrets.STATE_TOKEN }}
+
     steps:
       - uses: actions/checkout@v4
 
@@ -35,6 +43,19 @@ jobs:
       # Harmless (fast) when the feature is off.
       - name: Install materials builder deps
         run: npm ci --prefix materials
+
+      # This repo is public, so the files describing Kris's actual search
+      # (applied.json, matches.json, matches.md) live in a private state repo
+      # instead. Pull them in before the run; push them back after. Without
+      # STATE_REPO/STATE_TOKEN the scout still runs — it just starts with no
+      # match history, so duplicate suppression is off for that run.
+      - name: Pull private state
+        if: ${{ env.STATE_REPO != '' && env.STATE_TOKEN != '' }}
+        run: |
+          git clone --depth 1 "https://x-access-token:${STATE_TOKEN}@github.com/${STATE_REPO}.git" /tmp/state
+          for f in applied.json matches.json matches.md; do
+            if [ -f "/tmp/state/$f" ]; then cp "/tmp/state/$f" "data/$f"; echo "restored $f"; fi
+          done
 
       - name: Run scout
         env:
@@ -55,7 +76,9 @@ jobs:
           LOOKBACK_DAYS: ${{ inputs.lookback_days }}
         run: node src/scout.js
 
-      - name: Commit state
+      # Only the non-sensitive state lands here: seen.json, the ATS watchlist,
+      # the HN cursor, config. The three private files are gitignored.
+      - name: Commit public state
         run: |
           git config user.name "job-scout"
           git config user.email "job-scout@users.noreply.github.com"
@@ -63,8 +86,31 @@ jobs:
           git diff --cached --quiet || git commit -m "scout state: $(date -u +%F)"
           git push
 
-      - name: Open digest issue
-        if: ${{ hashFiles('digest.md') != '' }}
+      - name: Push private state
+        if: ${{ env.STATE_REPO != '' && env.STATE_TOKEN != '' }}
+        run: |
+          for f in applied.json matches.json matches.md; do
+            if [ -f "data/$f" ]; then cp "data/$f" "/tmp/state/$f"; fi
+          done
+          cd /tmp/state
+          git config user.name "job-scout"
+          git config user.email "job-scout@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet || git commit -m "scout state: $(date -u +%F)"
+          git push "https://x-access-token:${STATE_TOKEN}@github.com/${STATE_REPO}.git" HEAD:HEAD
+
+      # The digest names the companies he is targeting and carries the rubric's
+      # private read on each, so it goes to the private state repo — never to
+      # this public one. No STATE_REPO configured = no issue anywhere, which is
+      # the fail-safe direction: a missed digest beats a public one.
+      - name: Open digest issue (private repo)
+        if: ${{ hashFiles('digest.md') != '' && env.STATE_REPO != '' && env.STATE_TOKEN != '' }}
         env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh issue create --title "$(cat digest_title.txt)" --body-file digest.md
+          GH_TOKEN: ${{ secrets.STATE_TOKEN }}
+        run: gh issue create --repo "$STATE_REPO" --title "$(cat digest_title.txt)" --body-file digest.md
+
+      - name: Warn if digest had nowhere private to go
+        if: ${{ hashFiles('digest.md') != '' && (env.STATE_REPO == '' || env.STATE_TOKEN == '') }}
+        run: |
+          echo "::warning::Digest built but STATE_REPO/STATE_TOKEN are unset, so no issue was opened."
+          echo "::warning::This repo is public - posting the digest here would publish the job search. See README 'Private state repo'."
