@@ -34,7 +34,7 @@ If a night's run hits your subscription limit or a call fails, unscored jobs are
 3. Repo → Settings → Secrets and variables → Actions → New repository secret: `CLAUDE_CODE_OAUTH_TOKEN` with that value. *(API mode instead: secret `ANTHROPIC_API_KEY` and set `llm.transport` to `"api"`.)*
 4. Actions tab → enable workflows if prompted.
 5. First run: Actions → Job Scout → **Run workflow** (optionally set lookback, e.g. `14`). Watch the log.
-6. Done. It runs every other day (odd days of the month) at 4:00am Central (3:00am in winter; GitHub cron often adds 1–2h of lag) and opens a digest issue each run morning. Star-⭐ flags mark Vue/Nuxt/EdTech/faith-keyword hits.
+6. Done. **Currently PAUSED (2026-08-13):** the cron trigger in `.github/workflows/scout.yml` is commented out, so there are no automatic runs — uncomment the `cron:` line to resume. Manual runs (Actions → Job Scout → Run workflow) still work. When running, it fires every other day (odd days of the month) at 4:00am Central (3:00am in winter; GitHub cron often adds 1–2h of lag) and opens a digest issue in the private state repo each run morning. Star-⭐ flags mark Vue/Nuxt/EdTech/faith-keyword hits.
 
 ## Private state repo (required — this repo is public)
 
