@@ -388,5 +388,11 @@
   "token": "turquoise-health",
   "via": "auto-discovered",
   "first_seen": "2026-08-07"
+ },
+ {
+  "ats": "greenhouse",
+  "token": "thealleninstitute",
+  "via": "auto-discovered",
+  "first_seen": "2026-08-13"
  }
 ]
